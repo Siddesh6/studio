@@ -1,19 +1,21 @@
+
 'use client';
 
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { usePersonalData } from "@/context/PersonalDataContext";
+import CollaborationAnimation from "../collaboration-animation";
 
 export default function HeroSection() {
   const { personalData } = usePersonalData();
 
   return (
-    <section id="hero" className="w-full bg-secondary">
+    <section id="hero" className="w-full bg-background">
       <div className="container px-4 md:px-6">
         <div className="grid gap-6 lg:grid-cols-[1fr_400px] lg:gap-12 xl:grid-cols-[1fr_600px]">
           <div className="flex flex-col justify-center space-y-4">
             <div className="space-y-4">
-              <h1 className="font-headline text-3xl font-bold tracking-tighter sm:text-5xl xl:text-6xl/none bg-clip-text text-transparent bg-gradient-to-r from-primary to-accent">
+              <h1 className="font-headline text-3xl font-bold tracking-tighter sm:text-5xl xl:text-6xl/none bg-clip-text text-transparent bg-gradient-to-r from-primary to-accent-foreground">
                 {personalData.details.name}
               </h1>
               <h2 className="text-xl md:text-2xl text-primary font-semibold">{personalData.details.title}</h2>
@@ -47,12 +49,9 @@ export default function HeroSection() {
               ))}
             </div>
           </div>
-          <img
-            src="https://placehold.co/600x600.png"
-            data-ai-hint="developer portrait"
-            alt="Hero"
-            className="mx-auto aspect-square overflow-hidden rounded-xl object-cover sm:w-full lg:order-last shadow-2xl shadow-primary/20"
-          />
+          <div className="mx-auto flex items-center justify-center lg:order-last">
+            <CollaborationAnimation className="w-full max-w-sm" />
+          </div>
         </div>
       </div>
     </section>
