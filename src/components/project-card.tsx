@@ -11,9 +11,9 @@ interface ProjectCardProps {
   problem: string;
   technologies: string[];
   imageUrl: string;
-  imageHint: string;
-  liveUrl: string;
-  githubUrl: string;
+  imageHint?: string;
+  liveUrl?: string;
+  githubUrl?: string;
 }
 
 export default function ProjectCard({
@@ -36,6 +36,7 @@ export default function ProjectCard({
           width={600}
           height={400}
           className="aspect-video w-full object-cover rounded-t-lg"
+          unoptimized={imageUrl.startsWith('data:image')}
         />
         <CardTitle className="pt-4 text-2xl font-headline">{title}</CardTitle>
         <CardDescription>{role}</CardDescription>
@@ -51,16 +52,20 @@ export default function ProjectCard({
         </div>
       </CardContent>
       <CardFooter className="flex justify-end gap-2">
-        <Button variant="ghost" asChild>
-          <Link href={liveUrl} target="_blank" rel="noopener noreferrer">
-            Live Demo <ArrowUpRight className="h-4 w-4 ml-2" />
-          </Link>
-        </Button>
-        <Button asChild>
-          <Link href={githubUrl} target="_blank" rel="noopener noreferrer">
-            GitHub
-          </Link>
-        </Button>
+        {liveUrl && (
+          <Button variant="ghost" asChild>
+            <Link href={liveUrl} target="_blank" rel="noopener noreferrer">
+              Live Demo <ArrowUpRight className="h-4 w-4 ml-2" />
+            </Link>
+          </Button>
+        )}
+        {githubUrl && (
+          <Button asChild>
+            <Link href={githubUrl} target="_blank" rel="noopener noreferrer">
+              GitHub
+            </Link>
+          </Button>
+        )}
       </CardFooter>
     </Card>
   );

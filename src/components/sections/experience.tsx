@@ -1,9 +1,14 @@
-import { experienceData } from "@/lib/data";
+'use client';
+
+import { usePersonalData } from "@/context/PersonalDataContext";
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Briefcase } from "lucide-react";
 
 export default function ExperienceSection() {
+  const { personalData } = usePersonalData();
+  const { experience: experienceData } = personalData;
+
   return (
     <section id="experience" className="w-full">
       <div className="container px-4 md:px-6">
@@ -19,7 +24,7 @@ export default function ExperienceSection() {
           <div className="absolute left-1/2 -translate-x-1/2 h-full w-0.5 bg-border" aria-hidden="true" />
           <div className="space-y-8">
             {experienceData.map((exp, index) => (
-              <div key={index} className="flex items-center w-full">
+              <div key={exp.id} className="flex items-center w-full">
                 <div className={`w-1/2 ${index % 2 === 0 ? 'pr-8 text-right' : 'pl-8 text-left'}`}>
                   <Card className={`text-left shadow-md transition-shadow hover:shadow-lg ${index % 2 === 0 ? '' : 'lg:translate-x-[calc(100%_+_4rem)]'} ${index % 2 !== 0 ? '' : 'lg:-translate-x-[calc(0%_-_0rem)]'}`}>
                     <CardHeader>

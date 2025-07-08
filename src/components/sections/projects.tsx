@@ -1,8 +1,12 @@
-import { projectsData } from "@/lib/data";
+'use client';
+
+import { usePersonalData } from "@/context/PersonalDataContext";
 import ProjectCard from "@/components/project-card";
 import AISummarizer from "@/components/ai-summarizer";
 
 export default function ProjectsSection() {
+  const { personalData } = usePersonalData();
+
   return (
     <section id="projects" className="w-full">
       <div className="container px-4 md:px-6">
@@ -15,8 +19,8 @@ export default function ProjectsSection() {
           </div>
         </div>
         <div className="mx-auto grid max-w-5xl items-start gap-8 py-12 sm:grid-cols-2 md:gap-12 lg:max-w-none lg:grid-cols-3">
-          {projectsData.map((project, index) => (
-            <ProjectCard key={index} {...project} />
+          {personalData.projects.map((project) => (
+            <ProjectCard key={project.id} {...project} />
           ))}
         </div>
         <div className="mx-auto max-w-4xl pt-12">

@@ -17,12 +17,12 @@ export default function ContactSection() {
           </p>
           <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
             <Button size="lg" asChild>
-              <a href={`mailto:${personalData.contact.email}`}>
+              <a href={`mailto:${personalData.details.contact.email}`}>
                 Email Me
               </a>
             </Button>
             <div className="flex items-center gap-4">
-              {personalData.socials.map((social) => (
+              {personalData.details.socials.map((social) => (
                 <Link
                   key={social.name}
                   href={social.url}

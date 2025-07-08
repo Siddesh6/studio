@@ -1,5 +1,7 @@
+'use client';
+
 import Image from "next/image";
-import { galleryData } from "@/lib/data";
+import { usePersonalData } from "@/context/PersonalDataContext";
 import { Card, CardContent } from "@/components/ui/card";
 import {
   Dialog,
@@ -11,6 +13,9 @@ import {
 } from "@/components/ui/dialog";
 
 export default function GallerySection() {
+  const { personalData } = usePersonalData();
+  const { gallery: galleryData } = personalData;
+
   return (
     <section id="gallery" className="w-full bg-secondary">
       <div className="container px-4 md:px-6">
@@ -25,8 +30,8 @@ export default function GallerySection() {
           </div>
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-6">
-          {galleryData.map((item, index) => (
-            <Dialog key={index}>
+          {galleryData.map((item) => (
+            <Dialog key={item.id}>
               <DialogTrigger asChild>
                 <Card className="overflow-hidden cursor-pointer group transition-all duration-300 hover:shadow-xl hover:-translate-y-1">
                   <div className="aspect-video overflow-hidden">
@@ -37,6 +42,7 @@ export default function GallerySection() {
                       width={600}
                       height={400}
                       className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+                      unoptimized={item.imageUrl.startsWith('data:image')}
                     />
                   </div>
                   <CardContent className="p-4">
@@ -58,6 +64,7 @@ export default function GallerySection() {
                     width={1200}
                     height={800}
                     className="w-full aspect-video object-contain rounded-md"
+                    unoptimized={item.imageUrl.startsWith('data:image')}
                   />
                 </div>
               </DialogContent>

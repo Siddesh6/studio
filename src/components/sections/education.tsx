@@ -1,8 +1,13 @@
-import { educationData } from "@/lib/data";
+'use client';
+
+import { usePersonalData } from "@/context/PersonalDataContext";
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
 import { GraduationCap } from "lucide-react";
 
 export default function EducationSection() {
+  const { personalData } = usePersonalData();
+  const { education: educationData } = personalData;
+
   return (
     <section id="education" className="w-full bg-secondary">
       <div className="container px-4 md:px-6">
@@ -15,8 +20,8 @@ export default function EducationSection() {
           </div>
         </div>
         <div className="mx-auto grid max-w-2xl gap-6">
-          {educationData.map((edu, index) => (
-            <Card key={index} className="shadow-md">
+          {educationData.map((edu) => (
+            <Card key={edu.id} className="shadow-md">
               <CardHeader className="flex flex-row items-center gap-4">
                 <GraduationCap className="h-10 w-10 text-primary" />
                 <div>

@@ -2,54 +2,104 @@
 'use client';
 
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
-import { personalData as defaultPersonalData } from '@/lib/data';
+import { 
+  personalData as defaultPersonalData,
+  projectsData as defaultProjectsData,
+  skillsData as defaultSkillsData,
+  experienceData as defaultExperienceData,
+  educationData as defaultEducationData,
+  galleryData as defaultGalleryData,
+  socialIconMap
+} from '@/lib/data';
+import { LucideIcon } from 'lucide-react';
 
-type PersonalData = typeof defaultPersonalData;
+// Define types based on data structure
+type Social = { id: string; name: string; url: string; icon: LucideIcon };
+type PersonalDetails = Omit<typeof defaultPersonalData, 'socials'> & { socials: Social[] };
+type Project = typeof defaultProjectsData[0];
+type Skills = typeof defaultSkillsData;
+type Experience = typeof defaultExperienceData[0];
+type Education = typeof defaultEducationData[0];
+type GalleryItem = typeof defaultGalleryData[0];
 
-type PersonalDataContextType = {
-  personalData: PersonalData;
-  setPersonalData: (data: PersonalData) => void;
+export type PortfolioData = {
+  details: PersonalDetails;
+  projects: Project[];
+  skills: Skills;
+  experience: Experience[];
+  education: Education[];
+  gallery: GalleryItem[];
 };
 
+type PersonalDataContextType = {
+  personalData: PortfolioData;
+  setPersonalData: (data: PortfolioData) => void;
+};
+
+const defaultData: PortfolioData = {
+  details: defaultPersonalData,
+  projects: defaultProjectsData,
+  skills: defaultSkillsData,
+  experience: defaultExperienceData,
+  education: defaultEducationData,
+  gallery: defaultGalleryData,
+}
+
 const PersonalDataContext = createContext<PersonalDataContextType>({
-  personalData: defaultPersonalData,
+  personalData: defaultData,
   setPersonalData: () => {},
 });
 
 export const usePersonalData = () => useContext(PersonalDataContext);
 
 export const PersonalDataProvider = ({ children }: { children: ReactNode }) => {
-  const [personalData, setPersonalDataState] = useState<PersonalData>(defaultPersonalData);
+  const [personalData, setPersonalDataState] = useState<PortfolioData>(defaultData);
 
   useEffect(() => {
-    const storedData = localStorage.getItem('personalData');
+    const storedData = localStorage.getItem('portfolioData');
     if (storedData) {
       try {
         const parsedData = JSON.parse(storedData);
-        // Deep merge stored data with defaults to avoid breaking if the structure changes
+        
+        // Re-hydrate icons for socials
+        if (parsedData.details?.socials) {
+          parsedData.details.socials.forEach((social: any) => {
+            social.icon = socialIconMap[social.name] || socialIconMap['GitHub'];
+          });
+        }
+        
+        // Deep merge with defaults to prevent breakage if data structure changes
         const mergedData = {
-          ...defaultPersonalData,
-          ...parsedData,
-          contact: {
-            ...defaultPersonalData.contact,
-            ...parsedData.contact,
-          },
-          socials: parsedData.socials || defaultPersonalData.socials,
+          details: { ...defaultData.details, ...(parsedData.details || {}) },
+          projects: parsedData.projects || defaultData.projects,
+          skills: parsedData.skills || defaultData.skills,
+          experience: parsedData.experience || defaultData.experience,
+          education: parsedData.education || defaultData.education,
+          gallery: parsedData.gallery || defaultData.gallery,
         };
+
         setPersonalDataState(mergedData);
       } catch (e) {
-        console.error("Failed to parse personal data from localStorage", e);
-        setPersonalDataState(defaultPersonalData);
+        console.error("Failed to parse portfolio data from localStorage", e);
+        setPersonalDataState(defaultData);
       }
     }
   }, []);
 
-  const setPersonalData = (newData: PersonalData) => {
+  const setPersonalData = (newData: PortfolioData) => {
     setPersonalDataState(newData);
     try {
-      localStorage.setItem('personalData', JSON.stringify(newData));
+      // Create a serializable version of the data without React components (icons)
+      const serializableData = {
+        ...newData,
+        details: {
+          ...newData.details,
+          socials: newData.details.socials.map(({ icon, ...rest }) => rest),
+        }
+      };
+      localStorage.setItem('portfolioData', JSON.stringify(serializableData));
     } catch (e) {
-        console.error("Failed to save personal data to localStorage", e);
+        console.error("Failed to save portfolio data to localStorage", e);
     }
   };
 

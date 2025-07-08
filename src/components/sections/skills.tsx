@@ -1,9 +1,14 @@
-import { skillsData } from "@/lib/data";
+'use client';
+
+import { usePersonalData } from "@/context/PersonalDataContext";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { CheckCircle } from "lucide-react";
 
 export default function SkillsSection() {
+  const { personalData } = usePersonalData();
+  const { skills: skillsData } = personalData;
+
   return (
     <section id="skills" className="w-full bg-secondary">
       <div className="container px-4 md:px-6">
@@ -22,7 +27,7 @@ export default function SkillsSection() {
             </CardHeader>
             <CardContent className="space-y-6">
               {skillsData.technical.map((category) => (
-                <div key={category.category}>
+                <div key={category.id}>
                   <h3 className="font-semibold text-lg mb-3">{category.category}</h3>
                   <div className="flex flex-wrap gap-2">
                     {category.skills.map((skill) => (
@@ -40,9 +45,9 @@ export default function SkillsSection() {
             <CardContent>
               <ul className="space-y-3">
                 {skillsData.soft.map((skill) => (
-                  <li key={skill} className="flex items-center gap-3">
+                  <li key={skill.id} className="flex items-center gap-3">
                     <CheckCircle className="h-5 w-5 text-primary" />
-                    <span>{skill}</span>
+                    <span>{skill.skill}</span>
                   </li>
                 ))}
               </ul>
