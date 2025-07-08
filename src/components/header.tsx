@@ -5,6 +5,7 @@ import { MountainIcon, Settings } from "lucide-react";
 
 export default function Header() {
   const navLinks = [
+    { href: "#ideation", label: "Concept" },
     { href: "#projects", label: "Projects" },
     { href: "#skills", label: "Skills" },
     { href: "#experience", label: "Experience" },
