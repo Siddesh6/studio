@@ -47,7 +47,7 @@ export default function HeroSection() {
             src="https://placehold.co/600x600.png"
             data-ai-hint="developer portrait"
             alt="Hero"
-            className="mx-auto aspect-square overflow-hidden rounded-xl object-cover sm:w-full lg:order-last"
+            className="mx-auto aspect-square overflow-hidden rounded-xl object-cover sm:w-full lg:order-last shadow-2xl shadow-primary/20"
           />
         </div>
       </div>
