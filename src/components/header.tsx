@@ -8,6 +8,8 @@ export default function Header() {
     { href: "#projects", label: "Projects" },
     { href: "#skills", label: "Skills" },
     { href: "#experience", label: "Experience" },
+    { href: "#education", label: "Education" },
+    { href: "#gallery", label: "Gallery" },
     { href: "#contact", label: "Contact" },
   ];
 

@@ -112,3 +112,30 @@ export const educationData = [
     honors: "Magna Cum Laude",
   },
 ];
+
+export const galleryData = [
+  {
+    title: "AWS Certified Cloud Practitioner",
+    description: "Validation of foundational, high-level understanding of AWS Cloud, services, and terminology.",
+    imageUrl: "https://placehold.co/600x400.png",
+    imageHint: "certificate award",
+  },
+  {
+    title: "Hackathon Winner - AI for Good",
+    description: "First place in the 2023 'AI for Good' hackathon for developing a prototype that helps physically challenged people.",
+    imageUrl: "https://placehold.co/600x400.png",
+    imageHint: "trophy award",
+  },
+  {
+    title: "Google Certified Professional - Cloud Architect",
+    description: "Demonstrated the ability to design, develop, and manage robust, secure, scalable, highly available, and dynamic solutions to drive business objectives.",
+    imageUrl: "https://placehold.co/600x400.png",
+    imageHint: "certificate document",
+  },
+  {
+    title: "Employee of the Month",
+    description: "Recognized for outstanding performance and contributions to the team's success in Q3 2022.",
+    imageUrl: "https://placehold.co/600x400.png",
+    imageHint: "award medal",
+  },
+];
