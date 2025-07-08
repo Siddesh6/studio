@@ -1,0 +1,114 @@
+import { Github, Linkedin, Mail, Twitter } from "lucide-react";
+
+export const personalData = {
+  name: "Alex Doe",
+  title: "Full-Stack Developer & AI Enthusiast",
+  professionalSummary: "A creative and detail-oriented Full-Stack Developer with a passion for building intuitive and performant web applications. Experienced in leveraging modern technologies and AI to solve complex problems and deliver exceptional user experiences. Always eager to learn and take on new challenges.",
+  personalTouch: "When I'm not coding, you can find me exploring hiking trails, experimenting with new recipes, or diving into a good sci-fi novel.",
+  uniqueSellingPoint: "My unique blend of technical expertise in both frontend and backend development, combined with a keen interest in artificial intelligence, allows me to build not just functional, but truly intelligent and engaging applications.",
+  contact: {
+    email: "alex.doe@example.com",
+    location: "San Francisco, CA",
+  },
+  socials: [
+    { name: "LinkedIn", url: "https://linkedin.com", icon: Linkedin },
+    { name: "GitHub", url: "https://github.com", icon: Github },
+    { name: "Twitter", url: "https://twitter.com", icon: Twitter },
+  ]
+};
+
+export const projectsData = [
+  {
+    title: "AI-Powered Task Manager",
+    role: "Lead Developer",
+    problem: "Users often feel overwhelmed by long to-do lists and struggle to prioritize tasks effectively.",
+    technologies: ["Next.js", "React", "Firebase", "Genkit AI", "Tailwind CSS"],
+    features: ["Natural language task input", "AI-powered task prioritization", "Smart scheduling suggestions", "Collaborative workspaces"],
+    impact: "Increased user productivity by 25% and reduced task completion time by 15%.",
+    liveUrl: "#",
+    githubUrl: "#",
+    imageUrl: "https://placehold.co/600x400.png",
+    imageHint: "abstract tech",
+  },
+  {
+    title: "E-commerce Analytics Dashboard",
+    role: "Frontend Developer",
+    problem: "Online store owners needed a clear, consolidated view of their sales data, customer behavior, and inventory levels.",
+    technologies: ["React", "Redux", "D3.js", "Node.js", "PostgreSQL"],
+    features: ["Interactive sales charts", "Customer segmentation analysis", "Real-time inventory tracking", "Custom report generation"],
+    impact: "Provided business owners with actionable insights, leading to a 10% increase in average order value.",
+    liveUrl: "#",
+    githubUrl: "#",
+    imageUrl: "https://placehold.co/600x400.png",
+    imageHint: "dashboard analytics"
+  },
+  {
+    title: "Community Recipe Sharing Platform",
+    role: "Full-Stack Developer",
+    problem: "Home cooks lacked a dedicated, user-friendly platform to share their recipes and discover new ones from a diverse community.",
+    technologies: ["Vue.js", "Express", "MongoDB", "Cloudinary"],
+    features: ["User recipe submissions with images", "Advanced search and filtering", "Rating and review system", "Personalized recipe collections"],
+    impact: "Grew a community of 10,000+ active users within the first six months.",
+    liveUrl: "#",
+    githubUrl: "#",
+    imageUrl: "https://placehold.co/600x400.png",
+    imageHint: "food cooking"
+  },
+];
+
+export const skillsData = {
+  technical: [
+    { category: "Programming Languages", skills: ["JavaScript", "TypeScript", "Python", "Java", "SQL"] },
+    { category: "Frameworks & Libraries", skills: ["React", "Next.js", "Node.js", "Express", "Vue.js", "Spring Boot"] },
+    { category: "Databases", skills: ["PostgreSQL", "MongoDB", "Firebase Firestore", "Redis"] },
+    { category: "Cloud Platforms", skills: ["Firebase", "AWS", "Vercel", "Heroku"] },
+    { category: "Tools & Technologies", skills: ["Docker", "Git", "Webpack", "Genkit", "Jest"] },
+  ],
+  soft: ["Problem Solving", "Collaboration", "Communication", "Adaptability", "Creativity", "Time Management"],
+};
+
+export const experienceData = [
+  {
+    title: "Senior Software Engineer",
+    company: "Tech Solutions Inc.",
+    dates: "Jan 2021 - Present",
+    responsibilities: [
+      "Led the development of a new AI-driven analytics platform, improving data processing efficiency by 40%.",
+      "Mentored junior developers, fostering a culture of growth and knowledge sharing.",
+      "Architected and implemented scalable microservices using Node.js and Docker.",
+      "Collaborated with product managers to define feature requirements and technical specifications."
+    ],
+    technologies: ["React", "Node.js", "Python", "AWS", "Docker", "Kubernetes"],
+  },
+  {
+    title: "Software Developer",
+    company: "Innovate Co.",
+    dates: "Jun 2018 - Dec 2020",
+    responsibilities: [
+      "Developed and maintained features for a high-traffic e-commerce website using React and Redux.",
+      "Optimized application performance, resulting in a 30% reduction in page load times.",
+      "Wrote comprehensive unit and integration tests to ensure code quality and reliability.",
+    ],
+    technologies: ["JavaScript", "React", "Redux", "Jest", "Webpack"],
+  },
+  {
+    title: "Software Development Intern",
+    company: "Digital Creations",
+    dates: "May 2017 - Aug 2017",
+    responsibilities: [
+      "Assisted in the development of a client-facing web portal.",
+      "Participated in daily stand-ups and sprint planning sessions.",
+      "Fixed bugs and implemented small features, gaining experience in a professional agile environment.",
+    ],
+    technologies: ["HTML", "CSS", "jQuery", "PHP"],
+  },
+];
+
+export const educationData = [
+  {
+    degree: "Bachelor of Science in Computer Science",
+    institution: "State University",
+    graduationDate: "May 2018",
+    honors: "Magna Cum Laude",
+  },
+];
