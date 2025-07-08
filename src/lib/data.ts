@@ -23,6 +23,33 @@ export const personalData = {
   ]
 };
 
+export const editableContent = {
+  sections: {
+    skills: {
+      title: "My Skills",
+      description: "A collection of technologies I'm proficient with and the soft skills I bring to every project.",
+    },
+    experience: {
+      title: "Work Experience",
+      description: "My professional journey and the impact I've made in various roles.",
+    },
+    education: {
+      title: "Education",
+      description: "My academic background and qualifications.",
+    },
+    gallery: {
+      title: "Certifications & Awards",
+      description: "Recognitions and achievements that highlight my expertise and contributions.",
+    },
+  },
+  // Add other editable content here if needed in the future
+  // Example:
+  // projects: {
+  //   title: "My Projects",
+  //   description: "Showcasing a selection of my key projects and their impact.",
+  // },
+};
+
 export const projectsData = [
   {
     id: "proj-1",
@@ -66,6 +93,8 @@ export const projectsData = [
 ];
 
 export const skillsData = {
+  title: editableContent.sections.skills.title,
+  description: editableContent.sections.skills.description,
   technical: [
     { id: "tech-cat-1", category: "Programming Languages", skills: ["JavaScript", "TypeScript", "Python", "Java", "SQL"] },
     { id: "tech-cat-2", category: "Frameworks & Libraries", skills: ["React", "Next.js", "Node.js", "Express", "Vue.js", "Spring Boot"] },
