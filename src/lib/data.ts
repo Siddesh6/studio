@@ -126,7 +126,7 @@ export const experienceData = [
 export const educationData = [
   {
     id: "edu-1",
-    degree: "Bachelor of Science in Computer Science",
+    title: "Bachelor of Science in Computer Science",
     institution: "State University",
     graduationDate: "May 2018",
     honors: "Magna Cum Laude",
