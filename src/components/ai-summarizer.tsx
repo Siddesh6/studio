@@ -1,11 +1,11 @@
 "use client";
 
-import { useFormState, useFormStatus } from 'react-dom';
+import { useFormStatus } from 'react-dom';
 import { handleSummarize } from '@/app/actions';
 import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from '@/components/ui/card';
 import { Textarea } from '@/components/ui/textarea';
 import { Button } from '@/components/ui/button';
-import { useEffect } from 'react';
+import { useActionState, useEffect } from 'react';
 import { useToast } from '@/hooks/use-toast';
 import { Bot, Loader2 } from 'lucide-react';
 
@@ -21,7 +21,7 @@ function SubmitButton() {
 
 export default function AISummarizer() {
   const initialState = { message: '', summary: '', progress: '' };
-  const [state, formAction] = useFormState(handleSummarize, initialState);
+  const [state, formAction] = useActionState(handleSummarize, initialState);
   const { toast } = useToast();
 
   useEffect(() => {
