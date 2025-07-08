@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { MountainIcon } from "lucide-react";
+import { MountainIcon, Settings } from "lucide-react";
 
 export default function Header() {
   const navLinks = [
@@ -32,6 +32,12 @@ export default function Header() {
           </Link>
         ))}
       </nav>
+      <div className="ml-auto lg:ml-4">
+        <Link href="/admin" prefetch={false}>
+          <Settings className="h-5 w-5 text-muted-foreground transition-colors hover:text-primary" />
+          <span className="sr-only">Edit Details</span>
+        </Link>
+      </div>
     </header>
   );
 }

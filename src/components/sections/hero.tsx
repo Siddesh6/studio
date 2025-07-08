@@ -1,8 +1,12 @@
+'use client';
+
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { personalData } from "@/lib/data";
+import { usePersonalData } from "@/context/PersonalDataContext";
 
 export default function HeroSection() {
+  const { personalData } = usePersonalData();
+
   return (
     <section id="hero" className="w-full bg-secondary">
       <div className="container px-4 md:px-6">

@@ -1,8 +1,12 @@
+'use client';
+
 import Link from "next/link";
-import { personalData } from "@/lib/data";
+import { usePersonalData } from "@/context/PersonalDataContext";
 import { Button } from "@/components/ui/button";
 
 export default function ContactSection() {
+  const { personalData } = usePersonalData();
+
   return (
     <section id="contact" className="w-full">
       <div className="container px-4 md:px-6">
