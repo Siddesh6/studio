@@ -12,7 +12,7 @@ export default function IdeationSection() {
               Interactive Concept: The Shape of Ideas
             </h2>
             <p className="max-w-[900px] text-muted-foreground md:text-xl/relaxed">
-              This interactive animation represents a conceptual 4D cube, or tesseract. Its constant state of flux symbolizes the dynamic and ever-evolving nature of innovation. Move your cursor over the animation to shift its perspective, demonstrating how focus and interaction can shape the concepts we explore.
+              This interactive animation represents a pair of interlocking spur gears. Their synchronized movement symbolizes the precision, synergy, and collaboration required in complex engineering and software projects. Move your cursor over the animation to shift its perspective, exploring the mechanics from different angles.
             </p>
         </div>
         <div className="w-full max-w-6xl mx-auto">

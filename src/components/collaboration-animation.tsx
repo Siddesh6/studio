@@ -15,12 +15,33 @@ const CollaborationAnimation = ({ className }: { className?: string }) => {
         const x = (clientX - left - width / 2) / (width / 2); // -1 to 1
         const y = (clientY - top - height / 2) / (height / 2); // -1 to 1
         
-        const maxRotation = 15;
+        const maxRotation = 20; // Increased rotation for more dramatic effect
         setRotation({ x: -y * maxRotation, y: x * maxRotation });
     };
 
     const handleMouseLeave = () => {
         setRotation({ x: 0, y: 0 });
+    };
+
+    // A path for a gear tooth that will be repeated
+    const tooth = "M-5,-100 l10,0 l5,20 l-20,0 l5,-20 Z";
+
+    // A component to generate a gear using the tooth path
+    const Gear = ({ teeth, transform, animationClass }: { teeth: number, transform?: string, animationClass?: string }) => {
+        const toothElements = [];
+        for (let i = 0; i < teeth; i++) {
+            toothElements.push(
+                <use key={i} href="#tooth" transform={`rotate(${(360 / teeth) * i})`} />
+            );
+        }
+        return (
+            <g transform={transform} className={animationClass}>
+                <circle r="85" fill="transparent" />
+                {toothElements}
+                <circle r="70" className="gear-inner-ring" />
+                <circle r="25" className="gear-hub" />
+            </g>
+        );
     };
 
     return (
@@ -32,7 +53,7 @@ const CollaborationAnimation = ({ className }: { className?: string }) => {
             style={{ perspective: '1200px' }}
         >
             <div
-                className="relative w-[200px] h-[200px]"
+                className="relative w-[400px] h-[400px]"
                 style={{
                     transformStyle: 'preserve-3d',
                     transform: `rotateX(${rotation.x}deg) rotateY(${rotation.y}deg)`,
@@ -41,80 +62,65 @@ const CollaborationAnimation = ({ className }: { className?: string }) => {
             >
                 <style>
                 {`
-                    .tesseract-face {
-                        position: absolute;
-                        left: 50%;
-                        top: 50%;
-                        border: 1px solid hsl(var(--primary));
-                        background: hsla(var(--primary) / 0.1);
-                        box-shadow: 0 0 20px hsla(var(--primary) / 0.3), inset 0 0 20px hsla(var(--primary) / 0.2);
-                        transition: all 6s ease-in-out;
-                    }
-                    .tesseract-container:hover .tesseract-face {
-                        border-color: hsl(var(--accent));
-                        background: hsla(var(--accent) / 0.15);
-                        box-shadow: 0 0 35px hsla(var(--accent) / 0.5), inset 0 0 35px hsla(var(--accent) / 0.3);
-                    }
-                    .tesseract-container {
-                        position: absolute;
+                    .gear-svg {
                         width: 100%;
                         height: 100%;
-                        transform-style: preserve-3d;
-                        animation: tesseract-rotate 16s infinite linear;
+                        overflow: visible;
                     }
-
-                    @keyframes tesseract-rotate {
-                        0% { transform: rotateX(0deg) rotateY(0deg) rotateZ(0deg); }
-                        100% { transform: rotateX(360deg) rotateY(360deg) rotateZ(360deg); }
+                    .gear-svg * {
+                        transition: all 0.5s ease-out;
                     }
-
-                    .inner-cube {
-                        transform-style: preserve-3d;
-                        animation: inner-cube-rotate 16s infinite linear reverse;
+                    .gear-svg #tooth {
+                        fill: hsl(var(--primary) / 0.8);
+                        stroke: hsl(var(--primary));
+                        stroke-width: 2;
                     }
-
-                    @keyframes inner-cube-rotate {
-                        0% { transform: rotateX(0deg) rotateY(0deg) rotateZ(0deg) scale(0.5); }
-                        50% { transform: rotateX(-180deg) rotateY(-360deg) rotateZ(-180deg) scale(0.5); }
-                        100% { transform: rotateX(-360deg) rotateY(-720deg) rotateZ(-360deg) scale(0.5); }
+                    .gear-svg .gear-inner-ring {
+                        fill: none;
+                        stroke: hsl(var(--primary));
+                        stroke-width: 8;
                     }
-
-                    .outer-cube {
-                        transform-style: preserve-3d;
+                    .gear-svg .gear-hub {
+                        fill: hsl(var(--primary) / 0.2);
+                        stroke: hsl(var(--primary));
+                        stroke-width: 4;
                     }
-
-                    .outer-cube .tesseract-face {
-                        width: 200px;
-                        height: 200px;
-                        margin-left: -100px;
-                        margin-top: -100px;
+                    .gear-svg:hover #tooth {
+                        fill: hsl(var(--accent) / 0.8);
+                        stroke: hsl(var(--accent));
                     }
-                    .inner-cube .tesseract-face {
-                        width: 100px;
-                        height: 100px;
-                        margin-left: -50px;
-                        margin-top: -50px;
+                     .gear-svg:hover .gear-inner-ring {
+                        stroke: hsl(var(--accent));
+                    }
+                     .gear-svg:hover .gear-hub {
+                        fill: hsl(var(--accent) / 0.2);
+                        stroke: hsl(var(--accent));
+                    }
+                    .gear-1-animation {
+                        animation: rotate-cw 10s linear infinite;
+                    }
+                    .gear-2-animation {
+                        animation: rotate-ccw 10s linear infinite;
+                    }
+                    @keyframes rotate-cw {
+                        from { transform: rotate(0deg); }
+                        to { transform: rotate(360deg); }
+                    }
+                    @keyframes rotate-ccw {
+                        from { transform: rotate(0deg); }
+                        to { transform: rotate(-360deg); }
                     }
                 `}
                 </style>
-                <div className="tesseract-container">
-                    <div className="outer-cube">
-                        <div className="tesseract-face" style={{ transform: 'rotateY(0deg) translateZ(100px)' }}></div>
-                        <div className="tesseract-face" style={{ transform: 'rotateY(90deg) translateZ(100px)' }}></div>
-                        <div className="tesseract-face" style={{ transform: 'rotateY(180deg) translateZ(100px)' }}></div>
-                        <div className="tesseract-face" style={{ transform: 'rotateY(-90deg) translateZ(100px)' }}></div>
-                        <div className="tesseract-face" style={{ transform: 'rotateX(90deg) translateZ(100px)' }}></div>
-                        <div className="tesseract-face" style={{ transform: 'rotateX(-90deg) translateZ(100px)' }}></div>
-                    </div>
-                    <div className="inner-cube">
-                        <div className="tesseract-face" style={{ transform: 'rotateY(0deg) translateZ(50px)' }}></div>
-                        <div className="tesseract-face" style={{ transform: 'rotateY(90deg) translateZ(50px)' }}></div>
-                        <div className="tesseract-face" style={{ transform: 'rotateY(180deg) translateZ(50px)' }}></div>
-                        <div className="tesseract-face" style={{ transform: 'rotateY(-90deg) translateZ(50px)' }}></div>
-                        <div className="tesseract-face" style={{ transform: 'rotateX(90deg) translateZ(50px)' }}></div>
-                        <div className="tesseract-face" style={{ transform: 'rotateX(-90deg) translateZ(50px)' }}></div>
-                    </div>
-                </div>
+                <svg viewBox="-200 -200 400 400" className="gear-svg">
+                    <defs>
+                        <path id="tooth" d={tooth} />
+                    </defs>
+                    <g style={{transform: 'translateZ(10px)'}}>
+                        <Gear teeth={12} transform="translate(-70, -40)" animationClass="gear-1-animation"/>
+                        <Gear teeth={12} transform="translate(70, 40) rotate(15)" animationClass="gear-2-animation"/>
+                    </g>
+                </svg>
             </div>
         </div>
     );
