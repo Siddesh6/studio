@@ -523,7 +523,7 @@ export default function AdminPage() {
     const handleLogin = (e: React.FormEvent) => {
         e.preventDefault();
         // IMPORTANT: This is a simple client-side check and is not secure for production.
-        if (password === 'deeksha') {
+        if (password === (process.env.NEXT_PUBLIC_ADMIN_PASSWORD || 'deeksha')) {
             setIsAuthenticated(true);
             sessionStorage.setItem('isAdminAuthenticated', 'true');
             toast({ title: "Login Successful", description: "Welcome!" });
@@ -660,5 +660,3 @@ export default function AdminPage() {
         </div>
     );
 }
-
-    
