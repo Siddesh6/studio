@@ -461,6 +461,38 @@ function SkillsForm() {
 
 export default function AdminPage() {
     const { personalData, setPersonalData } = usePersonalData();
+    const [isAuthenticated, setIsAuthenticated] = useState(false);
+    const [password, setPassword] = useState('');
+    const { toast } = useToast();
+
+    useEffect(() => {
+        if (sessionStorage.getItem('isAdminAuthenticated') === 'true') {
+            setIsAuthenticated(true);
+        }
+    }, []);
+
+    const handleLogin = (e: React.FormEvent) => {
+        e.preventDefault();
+        // IMPORTANT: This is a simple client-side check and is not secure for production.
+        if (password === 'deeksha') {
+            setIsAuthenticated(true);
+            sessionStorage.setItem('isAdminAuthenticated', 'true');
+            toast({ title: "Login Successful", description: "Welcome!" });
+        } else {
+            toast({
+                variant: 'destructive',
+                title: "Login Failed",
+                description: "Incorrect password. Please try again.",
+            });
+            setPassword('');
+        }
+    };
+    
+    const handleLogout = () => {
+        sessionStorage.removeItem('isAdminAuthenticated');
+        setIsAuthenticated(false);
+        toast({ title: "Logged Out", description: "You have been successfully logged out." });
+    };
 
     const handleProjectUpdate = (projects: any[]) => {
         const processedProjects = projects.map(p => ({ ...p, technologies: typeof p.technologies === 'string' ? p.technologies.split(',').map(t => t.trim()) : p.technologies }));
@@ -487,9 +519,45 @@ export default function AdminPage() {
         setPersonalData({ ...personalData, publications });
     };
 
+    if (!isAuthenticated) {
+        return (
+            <div className="flex items-center justify-center min-h-screen bg-background">
+                <Card className="w-full max-w-sm mx-4">
+                    <CardHeader>
+                        <CardTitle className="text-2xl font-headline">Admin Login</CardTitle>
+                        <CardDescription>Enter the password to access the admin dashboard.</CardDescription>
+                    </CardHeader>
+                    <form onSubmit={handleLogin}>
+                        <CardContent className="space-y-4">
+                            <div className="space-y-2">
+                                <Label htmlFor="password">Password</Label>
+                                <Input 
+                                    id="password" 
+                                    type="password" 
+                                    value={password}
+                                    onChange={(e) => setPassword(e.target.value)}
+                                    required 
+                                    placeholder="********"
+                                />
+                            </div>
+                        </CardContent>
+                        <CardFooter>
+                            <Button type="submit" className="w-full">Login</Button>
+                        </CardFooter>
+                    </form>
+                </Card>
+            </div>
+        );
+    }
+
     return (
         <div className="container mx-auto py-12 px-4 md:px-6">
-            <Button variant="ghost" asChild className="mb-8"><Link href="/"><ArrowLeft className="mr-2 h-4 w-4" />Back to Portfolio</Link></Button>
+            <div className="flex justify-between items-center mb-8">
+                 <Button variant="ghost" asChild>
+                    <Link href="/"><ArrowLeft className="mr-2 h-4 w-4" />Back to Portfolio</Link>
+                </Button>
+                <Button variant="outline" onClick={handleLogout}>Logout</Button>
+            </div>
             <Tabs defaultValue="personal" className="w-full">
                 <TabsList className="grid w-full grid-cols-2 md:grid-cols-4 lg:grid-cols-7">
                     <TabsTrigger value="personal">Personal</TabsTrigger>
