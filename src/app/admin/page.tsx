@@ -477,8 +477,10 @@ export default function AdminPage() {
     const [isAuthenticated, setIsAuthenticated] = useState(false);
     const [password, setPassword] = useState('');
     const { toast } = useToast();
+    const [isClient, setIsClient] = useState(false);
 
     useEffect(() => {
+        setIsClient(true);
         if (sessionStorage.getItem('isAdminAuthenticated') === 'true') {
             setIsAuthenticated(true);
         }
@@ -531,6 +533,10 @@ export default function AdminPage() {
     const handlePublicationUpdate = (publications: any[]) => {
         setPersonalData({ ...personalData, publications });
     };
+
+    if (!isClient) {
+        return null;
+    }
 
     if (!isAuthenticated) {
         return (
