@@ -41,13 +41,11 @@ export const editableContent = {
       title: "Certifications & Awards",
       description: "Recognitions and achievements that highlight my expertise and contributions.",
     },
+    publications: {
+      title: "Publications",
+      description: "A selection of my published articles and journal papers.",
+    },
   },
-  // Add other editable content here if needed in the future
-  // Example:
-  // projects: {
-  //   title: "My Projects",
-  //   description: "Showcasing a selection of my key projects and their impact.",
-  // },
 };
 
 export const projectsData = [
@@ -190,5 +188,28 @@ export const galleryData = [
     description: "Recognized for outstanding performance and contributions to the team's success in Q3 2022.",
     imageUrl: "https://placehold.co/600x400.png",
     imageHint: "award medal",
+  },
+];
+
+export const publicationsData = [
+  {
+    id: "pub-1",
+    title: "A Novel Approach to Efficient Data Structures for AI",
+    journal: "Journal of Computer Science & Technology",
+    date: "October 2023",
+    url: "#",
+    summary: "This paper introduces a new B-Tree variant that improves read/write performance for datasets commonly used in machine learning models.",
+    imageUrl: "https://placehold.co/600x400.png",
+    imageHint: "scientific journal"
+  },
+  {
+    id: "pub-2",
+    title: "The Impact of Quantum Computing on Cryptography",
+    journal: "International Security Review",
+    date: "January 2024",
+    url: "#",
+    summary: "An analysis of the potential threats quantum computing poses to current cryptographic standards and a review of quantum-resistant algorithms.",
+    imageUrl: "https://placehold.co/600x400.png",
+    imageHint: "quantum computing"
   },
 ];

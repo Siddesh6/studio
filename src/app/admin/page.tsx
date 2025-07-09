@@ -77,6 +77,17 @@ const gallerySchema = z.object({
   imageHint: z.string().optional(),
 });
 
+const publicationSchema = z.object({
+  id: z.string(),
+  title: z.string().min(1, 'Title is required'),
+  journal: z.string().min(1, 'Journal is required'),
+  date: z.string().min(1, 'Date is required'),
+  summary: z.string().min(1, 'Summary is required'),
+  imageUrl: z.string().min(1, 'Image is required'),
+  imageHint: z.string().optional(),
+  url: z.string().url().or(z.literal('')).optional(),
+});
+
 const skillsSchema = z.object({
     technical: z.array(z.object({
         id: z.string(),
@@ -93,6 +104,7 @@ type ProjectFormValues = z.infer<typeof projectSchema>;
 type ExperienceFormValues = z.infer<typeof experienceSchema>;
 type EducationFormValues = z.infer<typeof educationSchema>;
 type GalleryFormValues = z.infer<typeof gallerySchema>;
+type PublicationFormValues = z.infer<typeof publicationSchema>;
 
 
 // Generic Manager Component
@@ -350,6 +362,35 @@ function GalleryForm({ item, onSave }: { item: GalleryFormValues | null, onSave:
   );
 }
 
+function PublicationForm({ item, onSave }: { item: PublicationFormValues | null, onSave: (data: PublicationFormValues) => void }) {
+  const form = useForm<PublicationFormValues>({
+    resolver: zodResolver(publicationSchema),
+    defaultValues: item || { id: '', title: '', journal: '', date: '', summary: '', imageUrl: '', url: '' },
+  });
+
+  useEffect(() => {
+    form.reset(item || { id: '', title: '', journal: '', date: '', summary: '', imageUrl: '', url: '' });
+  }, [item, form]);
+
+  const onSubmit = (data: PublicationFormValues) => onSave(data);
+
+  return (
+    <DialogContent className="sm:max-w-[600px]"><DialogHeader><DialogTitle>{item ? 'Edit' : 'Add'} Publication</DialogTitle></DialogHeader>
+      <Form {...form}><form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+        <FormField control={form.control} name="title" render={({ field }) => <FormItem><FormLabel>Title</FormLabel><FormControl><Input {...field} /></FormControl><FormMessage /></FormItem>} />
+        <FormField control={form.control} name="journal" render={({ field }) => <FormItem><FormLabel>Journal</FormLabel><FormControl><Input {...field} /></FormControl><FormMessage /></FormItem>} />
+        <FormField control={form.control} name="date" render={({ field }) => <FormItem><FormLabel>Date</FormLabel><FormControl><Input {...field} /></FormControl><FormMessage /></FormItem>} />
+        <FormField control={form.control} name="summary" render={({ field }) => <FormItem><FormLabel>Summary</FormLabel><FormControl><Textarea {...field} /></FormControl><FormMessage /></FormItem>} />
+        <FormField control={form.control} name="url" render={({ field }) => <FormItem><FormLabel>URL</FormLabel><FormControl><Input {...field} /></FormControl><FormMessage /></FormItem>} />
+        <FormItem><FormLabel>Image</FormLabel><FormControl><Input type="file" accept="image/*" onChange={(e) => handleImageUpload(e, form.setValue)} /></FormControl><FormMessage />
+            {form.watch('imageUrl') && <img src={form.watch('imageUrl')} alt="Preview" className="mt-2 rounded-md max-h-40" />}
+        </FormItem>
+        <DialogFooter><DialogClose asChild><Button type="button" variant="secondary">Cancel</Button></DialogClose><Button type="submit">Save</Button></DialogFooter>
+      </form></Form>
+    </DialogContent>
+  );
+}
+
 
 function SkillsForm() {
     const { personalData, setPersonalData } = usePersonalData();
@@ -441,18 +482,23 @@ export default function AdminPage() {
     const handleGalleryUpdate = (gallery: any[]) => {
         setPersonalData({ ...personalData, gallery });
     };
+    
+    const handlePublicationUpdate = (publications: any[]) => {
+        setPersonalData({ ...personalData, publications });
+    };
 
     return (
         <div className="container mx-auto py-12 px-4 md:px-6">
             <Button variant="ghost" asChild className="mb-8"><Link href="/"><ArrowLeft className="mr-2 h-4 w-4" />Back to Portfolio</Link></Button>
             <Tabs defaultValue="personal" className="w-full">
-                <TabsList className="grid w-full grid-cols-2 md:grid-cols-3 lg:grid-cols-6">
+                <TabsList className="grid w-full grid-cols-2 md:grid-cols-4 lg:grid-cols-7">
                     <TabsTrigger value="personal">Personal</TabsTrigger>
                     <TabsTrigger value="projects">Projects</TabsTrigger>
                     <TabsTrigger value="skills">Skills</TabsTrigger>
                     <TabsTrigger value="experience">Experience</TabsTrigger>
                     <TabsTrigger value="education">Education</TabsTrigger>
                     <TabsTrigger value="gallery">Gallery</TabsTrigger>
+                    <TabsTrigger value="publications">Publications</TabsTrigger>
                 </TabsList>
 
                 <TabsContent value="personal"><Card><CardHeader><CardTitle>Personal Details</CardTitle><CardDescription>Update your personal and contact information.</CardDescription></CardHeader><CardContent><PersonalDetailsForm /></CardContent></Card></TabsContent>
@@ -475,6 +521,10 @@ export default function AdminPage() {
 
                 <TabsContent value="gallery"><Card><CardHeader><CardTitle>Gallery</CardTitle><CardDescription>Manage your gallery of achievements and certificates.</CardDescription></CardHeader>
                     <CrudManager items={personalData.gallery} onUpdate={handleGalleryUpdate} FormComponent={GalleryForm as any} itemName="Gallery Item" />
+                </Card></TabsContent>
+
+                <TabsContent value="publications"><Card><CardHeader><CardTitle>Publications</CardTitle><CardDescription>Manage your published articles.</CardDescription></CardHeader>
+                    <CrudManager items={personalData.publications} onUpdate={handlePublicationUpdate} FormComponent={PublicationForm as any} itemName="Publication" />
                 </Card></TabsContent>
             </Tabs>
         </div>

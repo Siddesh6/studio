@@ -11,6 +11,7 @@ export default function Header() {
     { href: "#experience", label: "Experience" },
     { href: "#education", label: "Education" },
     { href: "#gallery", label: "Gallery" },
+    { href: "#publications", label: "Publications" },
     { href: "#contact", label: "Contact" },
   ];
 

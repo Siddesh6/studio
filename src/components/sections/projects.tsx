@@ -2,7 +2,6 @@
 
 import { usePersonalData } from "@/context/PersonalDataContext";
 import ProjectCard from "@/components/project-card";
-import AISummarizer from "@/components/ai-summarizer";
 
 export default function ProjectsSection() {
   const { personalData } = usePersonalData();
@@ -22,9 +21,6 @@ export default function ProjectsSection() {
           {personalData.projects.map((project) => (
             <ProjectCard key={project.id} {...project} />
           ))}
-        </div>
-        <div className="mx-auto max-w-4xl pt-12">
-            <AISummarizer />
         </div>
       </div>
     </section>

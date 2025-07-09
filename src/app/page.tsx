@@ -8,6 +8,7 @@ import EducationSection from '@/components/sections/education';
 import ContactSection from '@/components/sections/contact';
 import Footer from '@/components/footer';
 import GallerySection from '@/components/sections/gallery';
+import PublicationsSection from '@/components/sections/publications';
 
 export default function Home() {
   return (
@@ -21,6 +22,7 @@ export default function Home() {
         <ExperienceSection />
         <EducationSection />
         <GallerySection />
+        <PublicationsSection />
         <ContactSection />
       </main>
       <Footer />

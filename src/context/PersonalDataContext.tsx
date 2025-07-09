@@ -9,6 +9,7 @@ import {
   experienceData as defaultExperienceData,
   educationData as defaultEducationData,
   galleryData as defaultGalleryData,
+  publicationsData as defaultPublicationsData,
   socialIconMap
 } from '@/lib/data';
 import { LucideIcon } from 'lucide-react';
@@ -21,6 +22,7 @@ type Skills = typeof defaultSkillsData;
 type Experience = typeof defaultExperienceData[0];
 type Education = typeof defaultEducationData[0];
 type GalleryItem = typeof defaultGalleryData[0];
+type Publication = typeof defaultPublicationsData[0];
 
 export type PortfolioData = {
   details: PersonalDetails;
@@ -29,6 +31,7 @@ export type PortfolioData = {
   experience: Experience[];
   education: Education[];
   gallery: GalleryItem[];
+  publications: Publication[];
 };
 
 type PersonalDataContextType = {
@@ -43,6 +46,7 @@ const defaultData: PortfolioData = {
   experience: defaultExperienceData,
   education: defaultEducationData,
   gallery: defaultGalleryData,
+  publications: defaultPublicationsData,
 }
 
 const PersonalDataContext = createContext<PersonalDataContextType>({
@@ -76,6 +80,7 @@ export const PersonalDataProvider = ({ children }: { children: ReactNode }) => {
           experience: parsedData.experience || defaultData.experience,
           education: parsedData.education || defaultData.education,
           gallery: parsedData.gallery || defaultData.gallery,
+          publications: parsedData.publications || defaultData.publications,
         };
 
         setPersonalDataState(mergedData);
