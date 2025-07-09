@@ -51,22 +51,24 @@ export default function ProjectCard({
           ))}
         </div>
       </CardContent>
-      <CardFooter className="flex justify-end gap-2">
-        {liveUrl && (
-          <Button variant="ghost" asChild>
-            <Link href={liveUrl} target="_blank" rel="noopener noreferrer">
-              Live Demo <ArrowUpRight className="h-4 w-4 ml-2" />
-            </Link>
-          </Button>
-        )}
-        {githubUrl && (
-          <Button asChild>
-            <Link href={githubUrl} target="_blank" rel="noopener noreferrer">
-              GitHub
-            </Link>
-          </Button>
-        )}
-      </CardFooter>
+      {(liveUrl || githubUrl) && (
+        <CardFooter className="flex justify-end gap-2">
+          {liveUrl && (
+            <Button variant="ghost" asChild>
+              <Link href={liveUrl} target="_blank" rel="noopener noreferrer">
+                Live Demo <ArrowUpRight className="h-4 w-4 ml-2" />
+              </Link>
+            </Button>
+          )}
+          {githubUrl && (
+            <Button asChild>
+              <Link href={githubUrl} target="_blank" rel="noopener noreferrer">
+                GitHub
+              </Link>
+            </Button>
+          )}
+        </CardFooter>
+      )}
     </Card>
   );
 }

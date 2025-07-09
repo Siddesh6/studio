@@ -286,8 +286,8 @@ function ProjectForm({ item, onSave }: { item: ProjectFormValues | null, onSave:
           <FormField control={form.control} name="role" render={({ field }) => <FormItem><FormLabel>Role</FormLabel><FormControl><Input {...field} /></FormControl><FormMessage /></FormItem>} />
           <FormField control={form.control} name="problem" render={({ field }) => <FormItem><FormLabel>Problem</FormLabel><FormControl><Textarea {...field} /></FormControl><FormMessage /></FormItem>} />
           <FormField control={form.control} name="technologies" render={({ field }) => <FormItem><FormLabel>Technologies (comma-separated)</FormLabel><FormControl><Input {...field} /></FormControl><FormMessage /></FormItem>} />
-          <FormField control={form.control} name="liveUrl" render={({ field }) => <FormItem><FormLabel>Live URL</FormLabel><FormControl><Input {...field} /></FormControl><FormMessage /></FormItem>} />
-          <FormField control={form.control} name="githubUrl" render={({ field }) => <FormItem><FormLabel>GitHub URL</FormLabel><FormControl><Input {...field} /></FormControl><FormMessage /></FormItem>} />
+          <FormField control={form.control} name="liveUrl" render={({ field }) => <FormItem><FormLabel>Live URL (Optional)</FormLabel><FormControl><Input {...field} /></FormControl><FormMessage /></FormItem>} />
+          <FormField control={form.control} name="githubUrl" render={({ field }) => <FormItem><FormLabel>GitHub URL (Optional)</FormLabel><FormControl><Input {...field} /></FormControl><FormMessage /></FormItem>} />
           <FormItem><FormLabel>Image</FormLabel><FormControl><Input type="file" accept="image/*" onChange={(e) => handleImageUpload(e, form.setValue, 'imageUrl')} /></FormControl><FormMessage />
             {form.watch('imageUrl') && <img src={form.watch('imageUrl')} alt="Preview" className="mt-2 rounded-md max-h-40" />}
           </FormItem>
