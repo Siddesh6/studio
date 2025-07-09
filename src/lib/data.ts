@@ -9,6 +9,8 @@ export const socialIconMap: { [key: string]: LucideIcon } = {
 export const personalData = {
   name: "Alex Doe",
   title: "Full-Stack Developer & AI Enthusiast",
+  avatarUrl: "https://placehold.co/600x600.png",
+  avatarHint: "professional portrait",
   professionalSummary: "A creative and detail-oriented Full-Stack Developer with a passion for building intuitive and performant web applications. Experienced in leveraging modern technologies and AI to solve complex problems and deliver exceptional user experiences. Always eager to learn and take on new challenges.",
   personalTouch: "When I'm not coding, you can find me exploring hiking trails, experimenting with new recipes, or diving into a good sci-fi novel.",
   uniqueSellingPoint: "My unique blend of technical expertise in both frontend and backend development, combined with a keen interest in artificial intelligence, allows me to build not just functional, but truly intelligent and engaging applications.",

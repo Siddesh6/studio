@@ -13,12 +13,13 @@ export default function AboutSection() {
         <div className="grid items-center gap-10 lg:grid-cols-2 lg:gap-16">
           <div className="flex items-center justify-center">
              <Image
-              src="https://placehold.co/600x600.png"
-              data-ai-hint="professional portrait"
+              src={details.avatarUrl || "https://placehold.co/600x600.png"}
+              data-ai-hint={details.avatarHint}
               alt={details.name}
               width={450}
               height={450}
               className="rounded-full object-cover aspect-square shadow-2xl"
+              unoptimized={details.avatarUrl?.startsWith('data:image')}
             />
           </div>
           <div className="space-y-4">

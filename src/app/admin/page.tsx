@@ -30,6 +30,8 @@ const socialSchema = z.object({
 const personalDataSchema = z.object({
   name: z.string().min(1, 'Name is required'),
   title: z.string().min(1, 'Title is required'),
+  avatarUrl: z.string().optional(),
+  avatarHint: z.string().optional(),
   professionalSummary: z.string().min(1, 'Professional summary is required'),
   personalTouch: z.string().optional(),
   uniqueSellingPoint: z.string().optional(),
@@ -204,6 +206,17 @@ function PersonalDetailsForm() {
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
                 <FormField control={form.control} name="name" render={({ field }) => (<FormItem><FormLabel>Full Name</FormLabel><FormControl><Input {...field} /></FormControl><FormMessage /></FormItem>)} />
                 <FormField control={form.control} name="title" render={({ field }) => (<FormItem><FormLabel>Title / Role</FormLabel><FormControl><Input {...field} /></FormControl><FormMessage /></FormItem>)} />
+                
+                <FormItem>
+                    <FormLabel>Profile Photo</FormLabel>
+                    <FormControl>
+                        <Input type="file" accept="image/*" onChange={(e) => handleImageUpload(e, form.setValue, 'avatarUrl')} />
+                    </FormControl>
+                    <FormMessage />
+                    {form.watch('avatarUrl') && <img src={form.watch('avatarUrl')} alt="Avatar Preview" className="mt-2 rounded-full w-32 h-32 object-cover" />}
+                </FormItem>
+                <FormField control={form.control} name="avatarHint" render={({ field }) => (<FormItem><FormLabel>Profile Photo AI Hint</FormLabel><FormControl><Input {...field} placeholder="e.g. professional portrait"/></FormControl><FormMessage /></FormItem>)} />
+
                 <FormField control={form.control} name="professionalSummary" render={({ field }) => (<FormItem><FormLabel>Professional Summary</FormLabel><FormControl><Textarea rows={4} {...field} /></FormControl><FormMessage /></FormItem>)} />
                 <FormField control={form.control} name="personalTouch" render={({ field }) => (<FormItem><FormLabel>Personal Touch</FormLabel><FormControl><Textarea rows={3} {...field} /></FormControl><FormMessage /></FormItem>)} />
                 <FormField control={form.control} name="uniqueSellingPoint" render={({ field }) => (<FormItem><FormLabel>Unique Selling Point</FormLabel><FormControl><Textarea rows={3} {...field} /></FormControl><FormMessage /></FormItem>)} />
@@ -242,12 +255,12 @@ function PersonalDetailsForm() {
     );
 }
 
-const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>, setValue: (key: any, value: any) => void) => {
+const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>, setValue: (key: any, value: any) => void, fieldName: 'imageUrl' | 'avatarUrl') => {
     if (e.target.files && e.target.files[0]) {
         const file = e.target.files[0];
         const reader = new FileReader();
         reader.onloadend = () => {
-            setValue('imageUrl', reader.result as string);
+            setValue(fieldName, reader.result as string);
         };
         reader.readAsDataURL(file);
     }
@@ -275,7 +288,7 @@ function ProjectForm({ item, onSave }: { item: ProjectFormValues | null, onSave:
           <FormField control={form.control} name="technologies" render={({ field }) => <FormItem><FormLabel>Technologies (comma-separated)</FormLabel><FormControl><Input {...field} /></FormControl><FormMessage /></FormItem>} />
           <FormField control={form.control} name="liveUrl" render={({ field }) => <FormItem><FormLabel>Live URL</FormLabel><FormControl><Input {...field} /></FormControl><FormMessage /></FormItem>} />
           <FormField control={form.control} name="githubUrl" render={({ field }) => <FormItem><FormLabel>GitHub URL</FormLabel><FormControl><Input {...field} /></FormControl><FormMessage /></FormItem>} />
-          <FormItem><FormLabel>Image</FormLabel><FormControl><Input type="file" accept="image/*" onChange={(e) => handleImageUpload(e, form.setValue)} /></FormControl><FormMessage />
+          <FormItem><FormLabel>Image</FormLabel><FormControl><Input type="file" accept="image/*" onChange={(e) => handleImageUpload(e, form.setValue, 'imageUrl')} /></FormControl><FormMessage />
             {form.watch('imageUrl') && <img src={form.watch('imageUrl')} alt="Preview" className="mt-2 rounded-md max-h-40" />}
           </FormItem>
           <DialogFooter><DialogClose asChild><Button type="button" variant="secondary">Cancel</Button></DialogClose><Button type="submit">Save</Button></DialogFooter>
@@ -353,7 +366,7 @@ function GalleryForm({ item, onSave }: { item: GalleryFormValues | null, onSave:
       <Form {...form}><form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
         <FormField control={form.control} name="title" render={({ field }) => <FormItem><FormLabel>Title</FormLabel><FormControl><Input {...field} /></FormControl><FormMessage /></FormItem>} />
         <FormField control={form.control} name="description" render={({ field }) => <FormItem><FormLabel>Description</FormLabel><FormControl><Textarea {...field} /></FormControl><FormMessage /></FormItem>} />
-        <FormItem><FormLabel>Image</FormLabel><FormControl><Input type="file" accept="image/*" onChange={(e) => handleImageUpload(e, form.setValue)} /></FormControl><FormMessage />
+        <FormItem><FormLabel>Image</FormLabel><FormControl><Input type="file" accept="image/*" onChange={(e) => handleImageUpload(e, form.setValue, 'imageUrl')} /></FormControl><FormMessage />
             {form.watch('imageUrl') && <img src={form.watch('imageUrl')} alt="Preview" className="mt-2 rounded-md max-h-40" />}
         </FormItem>
         <DialogFooter><DialogClose asChild><Button type="button" variant="secondary">Cancel</Button></DialogClose><Button type="submit">Save</Button></DialogFooter>
@@ -382,7 +395,7 @@ function PublicationForm({ item, onSave }: { item: PublicationFormValues | null,
         <FormField control={form.control} name="date" render={({ field }) => <FormItem><FormLabel>Date</FormLabel><FormControl><Input {...field} /></FormControl><FormMessage /></FormItem>} />
         <FormField control={form.control} name="summary" render={({ field }) => <FormItem><FormLabel>Summary</FormLabel><FormControl><Textarea {...field} /></FormControl><FormMessage /></FormItem>} />
         <FormField control={form.control} name="url" render={({ field }) => <FormItem><FormLabel>URL</FormLabel><FormControl><Input {...field} /></FormControl><FormMessage /></FormItem>} />
-        <FormItem><FormLabel>Image</FormLabel><FormControl><Input type="file" accept="image/*" onChange={(e) => handleImageUpload(e, form.setValue)} /></FormControl><FormMessage />
+        <FormItem><FormLabel>Image</FormLabel><FormControl><Input type="file" accept="image/*" onChange={(e) => handleImageUpload(e, form.setValue, 'imageUrl')} /></FormControl><FormMessage />
             {form.watch('imageUrl') && <img src={form.watch('imageUrl')} alt="Preview" className="mt-2 rounded-md max-h-40" />}
         </FormItem>
         <DialogFooter><DialogClose asChild><Button type="button" variant="secondary">Cancel</Button></DialogClose><Button type="submit">Save</Button></DialogFooter>
