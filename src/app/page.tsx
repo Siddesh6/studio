@@ -7,12 +7,14 @@ import ContactSection from '@/components/sections/contact';
 import Footer from '@/components/footer';
 import GallerySection from '@/components/sections/gallery';
 import PublicationsSection from '@/components/sections/publications';
+import AboutSection from '@/components/sections/about';
 
 export default function Home() {
   return (
     <div className="flex flex-col min-h-[100dvh]">
       <Header />
       <main className="flex-1">
+        <AboutSection />
         <ProjectsSection />
         <SkillsSection />
         <ExperienceSection />

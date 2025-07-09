@@ -6,6 +6,7 @@ import { ThemeToggle } from "./theme-toggle";
 
 export default function Header() {
   const navLinks = [
+    { href: "#about", label: "About" },
     { href: "#projects", label: "Projects" },
     { href: "#skills", label: "Skills" },
     { href: "#experience", label: "Experience" },
