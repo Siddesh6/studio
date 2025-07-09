@@ -9,10 +9,10 @@ export default function IdeationSection() {
       <div className="container px-4 md:px-6">
         <div className="flex flex-col items-center justify-center space-y-4 text-center mb-12">
             <h2 className="text-3xl font-bold font-headline tracking-tighter sm:text-5xl bg-clip-text text-transparent bg-gradient-to-r from-primary to-accent">
-              Interactive Concept: The 5D Hypergear
+              Interactive Concept: The 4D Tesseract
             </h2>
             <p className="max-w-[900px] text-muted-foreground md:text-xl/relaxed">
-              This animation is a conceptual representation of a "5D Hypergear." It visualizes multiple dimensions of a complex system through nested, counter-rotating gear structures. Each layer represents a different facet of an idea—from core logic to user experience—all interacting in a delicate, multi-dimensional dance. This interactive piece symbolizes how intricate systems are built, layer by layer, into a cohesive whole. Move your cursor to shift the perspective and explore the structure's depth.
+              This animation is a conceptual representation of a "4D Tesseract," or hypercube. It symbolizes the multi-faceted nature of complex projects and ideas. The outer cube represents the tangible product, while the inner, counter-rotating cube symbolizes the core logic and abstract thinking behind it. This interactive piece demonstrates how different layers of a project are interconnected. Move your cursor to shift your perspective and explore the structure's depth.
             </p>
         </div>
         <div className="w-full max-w-6xl mx-auto">
