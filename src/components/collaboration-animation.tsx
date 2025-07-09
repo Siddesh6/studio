@@ -15,7 +15,7 @@ const CollaborationAnimation = ({ className }: { className?: string }) => {
         const x = (clientX - left - width / 2) / (width / 2); // -1 to 1
         const y = (clientY - top - height / 2) / (height / 2); // -1 to 1
         
-        const maxRotation = 20;
+        const maxRotation = 25; // increased rotation effect
         setRotation({ x: -y * maxRotation, y: x * maxRotation });
     };
 
@@ -43,7 +43,7 @@ const CollaborationAnimation = ({ className }: { className?: string }) => {
         return path;
     }
     
-    // A single face of the tesseract, shaped like a gear
+    // A single face of the hypergear, shaped like a gear
     const GearFace = ({ transform }: { transform: string }) => (
         <path
             d={generateGearPath(50, 8)}
@@ -51,8 +51,8 @@ const CollaborationAnimation = ({ className }: { className?: string }) => {
         />
     );
 
-    // A cube-like structure made of 6 gear faces
-    const GearTesseractCell = ({ scale = 1, animationClass, id }: { scale: number, animationClass: string, id: string }) => (
+    // A cube-like cell for the hypergear
+    const HyperGearCell = ({ scale = 1, animationClass, id }: { scale: number, animationClass: string, id: string }) => (
         <g id={id} className={animationClass} style={{ transform: `scale(${scale})` }}>
             <GearFace transform="rotateX(90) translateZ(50)" />
             <GearFace transform="rotateX(-90) translateZ(50)" />
@@ -69,57 +69,66 @@ const CollaborationAnimation = ({ className }: { className?: string }) => {
             onMouseMove={handleMouseMove}
             onMouseLeave={handleMouseLeave}
             className={cn("w-full h-[400px] flex items-center justify-center cursor-pointer", className)}
-            style={{ perspective: '1200px' }}
+            style={{ perspective: '1500px' }} // increased perspective
         >
             <div
                 className="relative w-[400px] h-[400px]"
                 style={{
                     transformStyle: 'preserve-3d',
                     transform: `rotateX(${rotation.x}deg) rotateY(${rotation.y}deg)`,
-                    transition: 'transform 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94)'
+                    transition: 'transform 0.1s linear' // faster response
                 }}
             >
                 <style>
                 {`
-                    .tesseract-svg {
+                    .hypergear-svg {
                         width: 100%;
                         height: 100%;
                         overflow: visible;
                     }
-                    .tesseract-svg g {
+                    .hypergear-svg g {
                         transform-style: preserve-3d;
                     }
-                    .tesseract-svg path {
-                        fill: hsl(var(--primary) / 0.15);
+                    .hypergear-svg path {
+                        fill: hsl(var(--primary) / 0.1);
                         stroke: hsl(var(--primary));
-                        stroke-width: 0.5; /* Thinner stroke for detailed gear shape */
+                        stroke-width: 0.3;
                         transition: all 0.5s ease-out;
                     }
-                    .tesseract-svg:hover path {
+                    .hypergear-svg:hover path {
                         fill: hsl(var(--accent) / 0.25);
                         stroke: hsl(var(--accent));
+                        stroke-width: 0.5;
                     }
                     
                     .outer-cell {
-                        animation: rotate-outer 20s linear infinite;
+                        animation: rotate-outer 25s linear infinite;
+                    }
+                    .middle-cell {
+                        animation: rotate-middle 20s linear infinite reverse;
                     }
                     .inner-cell {
-                        animation: rotate-inner 15s linear infinite reverse;
+                        animation: rotate-inner 15s linear infinite;
                     }
 
                     @keyframes rotate-outer {
-                        from { transform: scale(1) rotateX(0deg) rotateY(0deg); }
-                        to { transform: scale(1) rotateX(360deg) rotateY(360deg); }
+                        from { transform: scale(1) rotateX(0deg) rotateY(0deg) rotateZ(0deg); }
+                        to { transform: scale(1) rotateX(360deg) rotateY(-360deg) rotateZ(360deg); }
+                    }
+                    @keyframes rotate-middle {
+                        from { transform: scale(0.6) rotateY(0deg) rotateZ(0deg); }
+                        to { transform: scale(0.6) rotateY(360deg) rotateZ(-360deg); }
                     }
                     @keyframes rotate-inner {
-                        from { transform: scale(0.5) rotateX(0deg) rotateY(0deg); }
-                        to { transform: scale(0.5) rotateX(-360deg) rotateY(-360deg); }
+                        from { transform: scale(0.3) rotateX(0deg) rotateZ(0deg); }
+                        to { transform: scale(0.3) rotateX(-360deg) rotateZ(360deg); }
                     }
                 `}
                 </style>
-                <svg viewBox="-100 -100 200 200" className="tesseract-svg">
-                   <GearTesseractCell id="outer-cell" scale={1} animationClass="outer-cell" />
-                   <GearTesseractCell id="inner-cell" scale={0.5} animationClass="inner-cell" />
+                <svg viewBox="-100 -100 200 200" className="hypergear-svg">
+                   <HyperGearCell id="outer-cell" scale={1} animationClass="outer-cell" />
+                   <HyperGearCell id="middle-cell" scale={0.6} animationClass="middle-cell" />
+                   <HyperGearCell id="inner-cell" scale={0.3} animationClass="inner-cell" />
                 </svg>
             </div>
         </div>
