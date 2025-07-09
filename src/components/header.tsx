@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { MountainIcon, Settings } from "lucide-react";
+import { ThemeToggle } from "./theme-toggle";
 
 export default function Header() {
   const navLinks = [
@@ -34,7 +35,8 @@ export default function Header() {
           </Link>
         ))}
       </nav>
-      <div className="ml-auto lg:ml-4">
+      <div className="ml-auto flex items-center gap-4 lg:ml-4">
+        <ThemeToggle />
         <Link href="/admin" prefetch={false}>
           <Settings className="h-5 w-5 text-muted-foreground transition-colors hover:text-primary" />
           <span className="sr-only">Edit Details</span>
