@@ -1,3 +1,4 @@
+
 'use client';
 
 import { useState } from 'react';
@@ -13,6 +14,7 @@ import PublicationsSection from '@/components/sections/publications';
 import AboutSection from '@/components/sections/about';
 import { Button } from '@/components/ui/button';
 import { Eye } from 'lucide-react';
+import InvolvementSection from '@/components/sections/involvement';
 
 export default function Home() {
   const [showGallery, setShowGallery] = useState(false);
@@ -26,6 +28,7 @@ export default function Home() {
         <SkillsSection />
         <ExperienceSection />
         <EducationSection />
+        <InvolvementSection />
         <PublicationsSection />
         
         {!showGallery ? (
@@ -53,3 +56,5 @@ export default function Home() {
     </div>
   );
 }
+
+    

@@ -1,3 +1,4 @@
+
 "use client";
 
 import Link from "next/link";
@@ -11,6 +12,7 @@ export default function Header() {
     { href: "#skills", label: "Skills" },
     { href: "#experience", label: "Experience" },
     { href: "#education", label: "Education" },
+    { href: "#involvement", label: "Involvement" },
     { href: "#publications", label: "Publications" },
     { href: "#gallery", label: "Gallery" },
     { href: "#contact", label: "Contact" },
@@ -45,3 +47,5 @@ export default function Header() {
     </header>
   );
 }
+
+    

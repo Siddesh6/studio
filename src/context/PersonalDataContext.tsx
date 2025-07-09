@@ -1,4 +1,5 @@
 
+
 'use client';
 
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
@@ -10,6 +11,7 @@ import {
   educationData as defaultEducationData,
   galleryData as defaultGalleryData,
   publicationsData as defaultPublicationsData,
+  involvementData as defaultInvolvementData,
   socialIconMap
 } from '@/lib/data';
 import { LucideIcon } from 'lucide-react';
@@ -23,6 +25,7 @@ type Experience = typeof defaultExperienceData[0];
 type Education = typeof defaultEducationData[0];
 type GalleryItem = typeof defaultGalleryData[0];
 type Publication = typeof defaultPublicationsData[0];
+type Involvement = typeof defaultInvolvementData[0];
 
 export type PortfolioData = {
   details: PersonalDetails;
@@ -32,6 +35,7 @@ export type PortfolioData = {
   education: Education[];
   gallery: GalleryItem[];
   publications: Publication[];
+  involvement: Involvement[];
 };
 
 type PersonalDataContextType = {
@@ -47,6 +51,7 @@ const defaultData: PortfolioData = {
   education: defaultEducationData,
   gallery: defaultGalleryData,
   publications: defaultPublicationsData,
+  involvement: defaultInvolvementData,
 }
 
 const PersonalDataContext = createContext<PersonalDataContextType>({
@@ -81,6 +86,7 @@ export const PersonalDataProvider = ({ children }: { children: ReactNode }) => {
           education: parsedData.education || defaultData.education,
           gallery: parsedData.gallery || defaultData.gallery,
           publications: parsedData.publications || defaultData.publications,
+          involvement: parsedData.involvement || defaultData.involvement,
         };
 
         setPersonalDataState(mergedData);
@@ -114,3 +120,5 @@ export const PersonalDataProvider = ({ children }: { children: ReactNode }) => {
     </PersonalDataContext.Provider>
   );
 };
+
+    

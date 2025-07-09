@@ -1,3 +1,4 @@
+
 import { Github, Linkedin, Twitter, LucideIcon } from "lucide-react";
 
 export const socialIconMap: { [key: string]: LucideIcon } = {
@@ -162,6 +163,23 @@ export const educationData = [
   },
 ];
 
+export const involvementData = [
+  {
+    id: "involve-1",
+    title: "Google Developer Student Clubs",
+    role: "Core Team Member",
+    dates: "Sep 2022 - Jun 2023",
+    description: "Led workshops on Web Development and AI, organized hackathons, and managed community outreach.",
+  },
+  {
+    id: "involve-2",
+    title: "Coding Ninjas",
+    role: "Campus Ambassador",
+    dates: "Jan 2022 - Dec 2022",
+    description: "Promoted coding culture on campus, hosted competitive programming contests, and mentored students.",
+  },
+];
+
 export const galleryData = [
   {
     id: "gal-1",
@@ -215,3 +233,5 @@ export const publicationsData = [
     imageHint: "quantum computing"
   },
 ];
+
+    

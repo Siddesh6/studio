@@ -71,6 +71,14 @@ const educationSchema = z.object({
   honors: z.string().optional(),
 });
 
+const involvementSchema = z.object({
+  id: z.string(),
+  title: z.string().min(1, 'Organization is required'),
+  role: z.string().min(1, 'Role/Position is required'),
+  dates: z.string().min(1, 'Dates are required'),
+  description: z.string().min(1, 'Description is required'),
+});
+
 const gallerySchema = z.object({
   id: z.string(),
   title: z.string().min(1, 'Title is required'),
@@ -105,6 +113,7 @@ const skillsSchema = z.object({
 type ProjectFormValues = z.infer<typeof projectSchema>;
 type ExperienceFormValues = z.infer<typeof experienceSchema>;
 type EducationFormValues = z.infer<typeof educationSchema>;
+type InvolvementFormValues = z.infer<typeof involvementSchema>;
 type GalleryFormValues = z.infer<typeof gallerySchema>;
 type PublicationFormValues = z.infer<typeof publicationSchema>;
 
@@ -349,6 +358,31 @@ function EducationForm({ item, onSave }: { item: EducationFormValues | null, onS
   );
 }
 
+function InvolvementForm({ item, onSave }: { item: InvolvementFormValues | null, onSave: (data: InvolvementFormValues) => void }) {
+  const form = useForm<InvolvementFormValues>({
+    resolver: zodResolver(involvementSchema),
+    defaultValues: item || { id: '', title: '', role: '', dates: '', description: '' },
+  });
+
+  useEffect(() => {
+    form.reset(item || { id: '', title: '', role: '', dates: '', description: '' });
+  }, [item, form]);
+
+  const onSubmit = (data: InvolvementFormValues) => onSave(data);
+
+  return (
+    <DialogContent className="sm:max-w-[600px]"><DialogHeader><DialogTitle>{item ? 'Edit' : 'Add'} Involvement</DialogTitle></DialogHeader>
+      <Form {...form}><form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+        <FormField control={form.control} name="title" render={({ field }) => <FormItem><FormLabel>Organization / Club</FormLabel><FormControl><Input {...field} /></FormControl><FormMessage /></FormItem>} />
+        <FormField control={form.control} name="role" render={({ field }) => <FormItem><FormLabel>Role / Position</FormLabel><FormControl><Input {...field} /></FormControl><FormMessage /></FormItem>} />
+        <FormField control={form.control} name="dates" render={({ field }) => <FormItem><FormLabel>Dates</FormLabel><FormControl><Input {...field} /></FormControl><FormMessage /></FormItem>} />
+        <FormField control={form.control} name="description" render={({ field }) => <FormItem><FormLabel>Description</FormLabel><FormControl><Textarea {...field} /></FormControl><FormMessage /></FormItem>} />
+        <DialogFooter><DialogClose asChild><Button type="button" variant="secondary">Cancel</Button></DialogClose><Button type="submit">Save</Button></DialogFooter>
+      </form></Form>
+    </DialogContent>
+  );
+}
+
 function GalleryForm({ item, onSave }: { item: GalleryFormValues | null, onSave: (data: GalleryFormValues) => void }) {
   const form = useForm<GalleryFormValues>({
     resolver: zodResolver(gallerySchema),
@@ -526,6 +560,10 @@ export default function AdminPage() {
         setPersonalData({ ...personalData, education });
     };
 
+    const handleInvolvementUpdate = (involvement: any[]) => {
+        setPersonalData({ ...personalData, involvement });
+    };
+
     const handleGalleryUpdate = (gallery: any[]) => {
         setPersonalData({ ...personalData, gallery });
     };
@@ -578,12 +616,13 @@ export default function AdminPage() {
                 <Button variant="outline" onClick={handleLogout}>Logout</Button>
             </div>
             <Tabs defaultValue="personal" className="w-full">
-                <TabsList className="grid w-full grid-cols-2 md:grid-cols-4 lg:grid-cols-7">
+                <TabsList className="grid w-full grid-cols-2 md:grid-cols-4 lg:grid-cols-8">
                     <TabsTrigger value="personal">Personal</TabsTrigger>
                     <TabsTrigger value="projects">Projects</TabsTrigger>
                     <TabsTrigger value="skills">Skills</TabsTrigger>
                     <TabsTrigger value="experience">Experience</TabsTrigger>
                     <TabsTrigger value="education">Education</TabsTrigger>
+                    <TabsTrigger value="involvement">Involvement</TabsTrigger>
                     <TabsTrigger value="gallery">Gallery</TabsTrigger>
                     <TabsTrigger value="publications">Publications</TabsTrigger>
                 </TabsList>
@@ -606,6 +645,10 @@ export default function AdminPage() {
                     <CrudManager items={personalData.education} onUpdate={handleEducationUpdate} FormComponent={EducationForm as any} itemName="Education" />
                 </Card></TabsContent>
 
+                <TabsContent value="involvement"><Card><CardHeader><CardTitle>Organizations & Involvement</CardTitle><CardDescription>Manage your campus and technical organization involvement.</CardDescription></CardHeader>
+                    <CrudManager items={personalData.involvement} onUpdate={handleInvolvementUpdate} FormComponent={InvolvementForm as any} itemName="Involvement" />
+                </Card></TabsContent>
+
                 <TabsContent value="gallery"><Card><CardHeader><CardTitle>Gallery</CardTitle><CardDescription>Manage your gallery of achievements and certificates.</CardDescription></CardHeader>
                     <CrudManager items={personalData.gallery} onUpdate={handleGalleryUpdate} FormComponent={GalleryForm as any} itemName="Gallery Item" />
                 </Card></TabsContent>
@@ -617,3 +660,5 @@ export default function AdminPage() {
         </div>
     );
 }
+
+    
