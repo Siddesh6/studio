@@ -2,7 +2,7 @@
 "use client";
 
 import Link from "next/link";
-import { MountainIcon, Settings } from "lucide-react";
+import { Settings } from "lucide-react";
 import { ThemeToggle } from "./theme-toggle";
 
 export default function Header() {
@@ -20,12 +20,7 @@ export default function Header() {
 
   return (
     <header className="px-4 lg:px-6 h-14 flex items-center bg-background/80 backdrop-blur-sm sticky top-0 z-50 border-b">
-      <Link href="#" className="flex items-center justify-center" prefetch={false}>
-        <MountainIcon className="h-6 w-6 text-primary" />
-        <span className="sr-only">PortfoliAI</span>
-      </Link>
-      <span className="font-headline text-xl font-bold ml-2">PortfoliAI</span>
-      <nav className="ml-auto hidden gap-4 sm:gap-6 lg:flex">
+      <nav className="hidden gap-4 sm:gap-6 lg:flex">
         {navLinks.map((link) => (
           <Link
             key={link.href}
@@ -37,7 +32,7 @@ export default function Header() {
           </Link>
         ))}
       </nav>
-      <div className="ml-auto flex items-center gap-4 lg:ml-4">
+      <div className="ml-auto flex items-center gap-4">
         <ThemeToggle />
         <Link href="/admin" prefetch={false}>
           <Settings className="h-5 w-5 text-muted-foreground transition-colors hover:text-primary" />
@@ -47,5 +42,3 @@ export default function Header() {
     </header>
   );
 }
-
-    
