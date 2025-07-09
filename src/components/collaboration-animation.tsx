@@ -15,34 +15,31 @@ const CollaborationAnimation = ({ className }: { className?: string }) => {
         const x = (clientX - left - width / 2) / (width / 2); // -1 to 1
         const y = (clientY - top - height / 2) / (height / 2); // -1 to 1
         
-        const maxRotation = 20; // Increased rotation for more dramatic effect
+        const maxRotation = 20;
         setRotation({ x: -y * maxRotation, y: x * maxRotation });
     };
 
     const handleMouseLeave = () => {
         setRotation({ x: 0, y: 0 });
     };
+    
+    const CubeFace = ({ transform }: { transform: string }) => (
+        <path
+            d="M-50,-50 L50,-50 L50,50 L-50,50 Z"
+            transform={transform}
+        />
+    );
 
-    // A path for a gear tooth that will be repeated
-    const tooth = "M-5,-100 l10,0 l5,20 l-20,0 l5,-20 Z";
-
-    // A component to generate a gear using the tooth path
-    const Gear = ({ teeth, transform, animationClass }: { teeth: number, transform?: string, animationClass?: string }) => {
-        const toothElements = [];
-        for (let i = 0; i < teeth; i++) {
-            toothElements.push(
-                <use key={i} href="#tooth" transform={`rotate(${(360 / teeth) * i})`} />
-            );
-        }
-        return (
-            <g transform={transform} className={animationClass}>
-                <circle r="85" fill="transparent" />
-                {toothElements}
-                <circle r="70" className="gear-inner-ring" />
-                <circle r="25" className="gear-hub" />
-            </g>
-        );
-    };
+    const Cube = ({ scale = 1, animationClass, id }: { scale: number, animationClass: string, id: string }) => (
+        <g id={id} className={animationClass} style={{ transform: `scale(${scale})` }}>
+            <CubeFace transform="rotateX(90) translateZ(50)" />
+            <CubeFace transform="rotateX(-90) translateZ(50)" />
+            <CubeFace transform="rotateY(0) translateZ(50)" />
+            <CubeFace transform="rotateY(180) translateZ(50)" />
+            <CubeFace transform="rotateY(90) translateZ(50)" />
+            <CubeFace transform="rotateY(-90) translateZ(50)" />
+        </g>
+    );
 
     return (
         <div 
@@ -62,64 +59,45 @@ const CollaborationAnimation = ({ className }: { className?: string }) => {
             >
                 <style>
                 {`
-                    .gear-svg {
+                    .tesseract-svg {
                         width: 100%;
                         height: 100%;
                         overflow: visible;
                     }
-                    .gear-svg * {
+                    .tesseract-svg g {
+                        transform-style: preserve-3d;
+                    }
+                    .tesseract-svg path {
+                        fill: hsl(var(--primary) / 0.15);
+                        stroke: hsl(var(--primary));
+                        stroke-width: 1;
                         transition: all 0.5s ease-out;
                     }
-                    .gear-svg #tooth {
-                        fill: hsl(var(--primary) / 0.8);
-                        stroke: hsl(var(--primary));
-                        stroke-width: 2;
-                    }
-                    .gear-svg .gear-inner-ring {
-                        fill: none;
-                        stroke: hsl(var(--primary));
-                        stroke-width: 8;
-                    }
-                    .gear-svg .gear-hub {
-                        fill: hsl(var(--primary) / 0.2);
-                        stroke: hsl(var(--primary));
-                        stroke-width: 4;
-                    }
-                    .gear-svg:hover #tooth {
-                        fill: hsl(var(--accent) / 0.8);
+                    .tesseract-svg:hover path {
+                        fill: hsl(var(--accent) / 0.25);
                         stroke: hsl(var(--accent));
                     }
-                     .gear-svg:hover .gear-inner-ring {
-                        stroke: hsl(var(--accent));
+                    
+                    .outer-cube {
+                        animation: rotate-outer 20s linear infinite;
                     }
-                     .gear-svg:hover .gear-hub {
-                        fill: hsl(var(--accent) / 0.2);
-                        stroke: hsl(var(--accent));
+                    .inner-cube {
+                        animation: rotate-inner 15s linear infinite reverse;
                     }
-                    .gear-1-animation {
-                        animation: rotate-cw 10s linear infinite;
+
+                    @keyframes rotate-outer {
+                        from { transform: scale(1) rotateX(0deg) rotateY(0deg); }
+                        to { transform: scale(1) rotateX(360deg) rotateY(360deg); }
                     }
-                    .gear-2-animation {
-                        animation: rotate-ccw 10s linear infinite;
-                    }
-                    @keyframes rotate-cw {
-                        from { transform: rotate(0deg); }
-                        to { transform: rotate(360deg); }
-                    }
-                    @keyframes rotate-ccw {
-                        from { transform: rotate(0deg); }
-                        to { transform: rotate(-360deg); }
+                    @keyframes rotate-inner {
+                        from { transform: scale(0.5) rotateX(0deg) rotateY(0deg); }
+                        to { transform: scale(0.5) rotateX(360deg) rotateY(360deg); }
                     }
                 `}
                 </style>
-                <svg viewBox="-200 -200 400 400" className="gear-svg">
-                    <defs>
-                        <path id="tooth" d={tooth} />
-                    </defs>
-                    <g style={{transform: 'translateZ(10px)'}}>
-                        <Gear teeth={12} transform="translate(-70, -40)" animationClass="gear-1-animation"/>
-                        <Gear teeth={12} transform="translate(70, 40) rotate(15)" animationClass="gear-2-animation"/>
-                    </g>
+                <svg viewBox="-100 -100 200 200" className="tesseract-svg">
+                   <Cube id="outer-cube" scale={1} animationClass="outer-cube" />
+                   <Cube id="inner-cube" scale={0.5} animationClass="inner-cube" />
                 </svg>
             </div>
         </div>
