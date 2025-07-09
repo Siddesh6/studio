@@ -5,7 +5,7 @@ import { cn } from "@/lib/utils";
 
 const CollaborationAnimation = ({ className }: { className?: string }) => {
   return (
-    <div className={cn("w-full h-full flex items-center justify-center", className)}>
+    <div className={cn("w-full h-full flex items-center justify-center bg-transparent", className)}>
       <svg
         viewBox="0 0 800 400"
         xmlns="http://www.w3.org/2000/svg"
@@ -13,85 +13,98 @@ const CollaborationAnimation = ({ className }: { className?: string }) => {
       >
         <style>
           {`
-            .gear { animation: rotate 20s linear infinite; transform-origin: center; }
-            .gear-2 { animation: rotate-back 15s linear infinite; transform-origin: center; }
-            .piston { animation: piston-move 4s ease-in-out infinite; }
-            .data-flow { stroke-dasharray: 10; animation: dash 2s linear infinite; }
-            .scan-light { animation: scan 4s linear infinite; }
-            .eye-glow { animation: pulse 3s ease-in-out infinite; }
+            .hyper-gear-outer { animation: rotate 30s linear infinite; transform-origin: center; }
+            .hyper-gear-inner { animation: rotate-back 20s linear infinite; transform-origin: center; }
+            .spark { animation: spark-burst 4s ease-out infinite; transform-origin: center; }
+            .data-stream { stroke-dasharray: 15 5; animation: dash 1s linear infinite; }
+            .world-grid-lat { animation: scale-up 10s ease-in-out infinite alternate; transform-origin: center; }
+            .world-grid-lon { animation: rotate 20s linear infinite; transform-origin: center; }
+            .core-pulse { animation: pulse 2s ease-in-out infinite; }
 
             @keyframes rotate { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
             @keyframes rotate-back { from { transform: rotate(0deg); } to { transform: rotate(-360deg); } }
-            @keyframes piston-move { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(20px); } }
             @keyframes dash { to { stroke-dashoffset: -20; } }
-            @keyframes scan {
-              0%, 100% { transform: translateY(-20px); opacity: 0; }
-              25% { opacity: 1; }
-              75% { opacity: 1; }
-              90% { transform: translateY(20px); opacity: 0; }
+            @keyframes pulse { 0%, 100% { r: 28; opacity: 0.8; } 50% { r: 32; opacity: 1; } }
+            @keyframes spark-burst {
+              0% { transform: scale(0); opacity: 0; }
+              50% { transform: scale(1.2); opacity: 1; }
+              100% { transform: scale(0); opacity: 0; }
             }
-            @keyframes pulse { 0%, 100% { opacity: 0.7; } 50% { opacity: 1; } }
+             @keyframes scale-up {
+              from { transform: scale(0.8); }
+              to { transform: scale(1.2); }
+            }
           `}
         </style>
         
         <defs>
-          <radialGradient id="grad1" cx="50%" cy="50%" r="50%" fx="50%" fy="50%">
-            <stop offset="0%" style={{stopColor: 'hsl(var(--secondary-foreground))', stopOpacity:1}} />
-            <stop offset="100%" style={{stopColor: 'hsl(var(--secondary))', stopOpacity:1}} />
-          </radialGradient>
-          <linearGradient id="grad2" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" style={{stopColor: 'hsl(var(--primary))', stopOpacity:0.8}} />
-            <stop offset="100%" style={{stopColor: 'hsl(var(--accent))', stopOpacity:0.8}} />
-          </linearGradient>
-           <filter id="glow">
-            <feGaussianBlur stdDeviation="3.5" result="coloredBlur" />
-            <feMerge>
-                <feMergeNode in="coloredBlur" />
-                <feMergeNode in="SourceGraphic" />
-            </feMerge>
-          </filter>
+            <radialGradient id="gearGrad" cx="50%" cy="50%" r="50%">
+                <stop offset="0%" stopColor="hsl(var(--muted-foreground))" />
+                <stop offset="60%" stopColor="hsl(var(--secondary))" />
+                <stop offset="100%" stopColor="hsl(var(--background))" />
+            </radialGradient>
+            <radialGradient id="coreGrad" cx="50%" cy="50%" r="50%">
+                <stop offset="0%" stopColor="hsl(var(--accent))" stopOpacity="1" />
+                <stop offset="100%" stopColor="hsl(var(--primary))" stopOpacity="0.8" />
+            </radialGradient>
+             <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+                <feGaussianBlur stdDeviation="5" result="coloredBlur" />
+                <feMerge>
+                    <feMergeNode in="coloredBlur" />
+                    <feMergeNode in="SourceGraphic" />
+                </feMerge>
+            </filter>
         </defs>
 
         {/* Mechanical Side */}
-        <g id="mechanical-parts" transform="translate(150, 200)">
-          {/* Main Gear */}
-          <g className="gear" transform="scale(1.5)">
-            <path fill="url(#grad1)" d="M50,25a25,25 0 1,0-50,0a25,25 0 1,0 50,0 M48,2v5h-4v-5h4 M2,25h5v-4h-5v4 M25,48h-4v-5h4v5 M7.9,7.9l3.5,3.5l-2.8,2.8l-3.5-3.5l2.8-2.8 M7.9,42.1l3.5-3.5l2.8,2.8l-3.5,3.5l-2.8-2.8 M42.1,42.1l-3.5-3.5l2.8-2.8l3.5,3.5l-2.8,2.8 M42.1,7.9l-3.5,3.5l-2.8-2.8l3.5-3.5l2.8,2.8z" />
-            <circle cx="25" cy="25" r="10" fill="hsl(var(--background))" />
-          </g>
-          {/* Secondary Gear */}
-          <g className="gear-2" transform="translate(80, -60) scale(0.8)">
-            <path fill="url(#grad1)" d="M50,25a25,25 0 1,0-50,0a25,25 0 1,0 50,0 M48,2v5h-4v-5h4 M2,25h5v-4h-5v4 M25,48h-4v-5h4v5 M7.9,7.9l3.5,3.5l-2.8,2.8l-3.5-3.5l2.8-2.8 M7.9,42.1l3.5-3.5l2.8,2.8l-3.5,3.5l-2.8-2.8 M42.1,42.1l-3.5-3.5l2.8-2.8l3.5,3.5l-2.8,2.8 M42.1,7.9l-3.5,3.5l-2.8-2.8l3.5-3.5l2.8,2.8z" />
-             <circle cx="25" cy="25" r="8" fill="hsl(var(--background))" />
-          </g>
-          {/* Piston */}
-          <g className="piston" transform="translate(-100, -50)">
-            <rect x="0" y="0" width="30" height="60" rx="5" fill="hsl(var(--secondary))" />
-            <rect x="5" y="5" width="20" height="50" fill="hsl(var(--secondary-foreground))" opacity="0.2" />
-          </g>
+        <g id="mechanical-construct" transform="translate(200, 200)">
+            {/* Outer rotating gear */}
+            <g className="hyper-gear-outer">
+                <path fill="url(#gearGrad)" stroke="hsl(var(--border))" strokeWidth="1"
+                    d="M 0 -80 L 14 -73 A 80 80 0 0 1 73 -14 L 80 0 L 73 14 A 80 80 0 0 1 14 73 L 0 80 L -14 73 A 80 80 0 0 1 -73 14 L -80 0 L -73 -14 A 80 80 0 0 1 -14 -73 Z" />
+                <circle cx="0" cy="0" r="40" fill="none" stroke="hsl(var(--primary))" strokeWidth="2" />
+            </g>
+            {/* Inner counter-rotating gear */}
+            <g className="hyper-gear-inner">
+                <path fill="hsl(var(--secondary))" stroke="hsl(var(--border))" strokeWidth="0.5"
+                    d="M 0 -55 L 48 -27.5 L 48 27.5 L 0 55 L -48 27.5 L -48 -27.5 Z" />
+                 <circle cx="0" cy="0" r="20" fill="hsl(var(--background))" />
+            </g>
+
+            {/* Spark of creation */}
+            <g className="spark" style={{ animationDelay: '0s' }}>
+                <path d="M-10,0 L10,0 M0,-10 L0,10 M-7,-7 L7,7 M-7,7 L7,-7" stroke="hsl(var(--accent))" strokeWidth="2" filter="url(#glow)"/>
+            </g>
+            <g className="spark" style={{ animationDelay: '2s' }}>
+                <path d="M-10,0 L10,0 M0,-10 L0,10 M-7,-7 L7,7 M-7,7 L7,-7" stroke="hsl(var(--primary))" strokeWidth="2" filter="url(#glow)"/>
+            </g>
         </g>
         
-        {/* Data Flow */}
-        <g id="data-flow" filter="url(#glow)">
-          <path className="data-flow" d="M300,200 C 400,100 500,300 600,200" fill="none" stroke="hsl(var(--primary))" strokeWidth="2" />
-          <path className="data-flow" style={{animationDelay: '0.5s'}} d="M250,150 C 350,250 450,50 580,180" fill="none" stroke="hsl(var(--accent))" strokeWidth="2" />
-        </g>
+        {/* Data Stream */}
+        <path className="data-stream" d="M300,200 C 400,150 500,250 600,200" fill="none" stroke="url(#coreGrad)" strokeWidth="2.5" filter="url(#glow)"/>
 
-        {/* Software / Vision Side */}
-        <g id="vision-parts" transform="translate(650, 200)">
-          {/* Eye shape */}
-          <path className="eye-glow" d="M-50,0 C-25,-50 25,-50 50,0 C25,50 -25,50 -50,0z" fill="none" stroke="hsl(var(--primary))" strokeWidth="3" filter="url(#glow)" />
-          {/* Pupil */}
-          <circle cx="0" cy="0" r="15" fill="url(#grad2)" />
-           {/* Scan light */}
-          <rect className="scan-light" x="-2" y="-20" width="4" height="40" fill="hsl(var(--primary-foreground))" rx="2" />
-          {/* Code/data bits around */}
-          <g opacity="0.5">
-              <text x="-40" y="-45" fill="hsl(var(--foreground))" fontSize="12" fontFamily="monospace">101</text>
-              <text x="30" y="-55" fill="hsl(var(--foreground))" fontSize="12" fontFamily="monospace">010</text>
-              <text x="50" y="20" fill="hsl(var(--foreground))" fontSize="12" fontFamily="monospace">001</text>
-              <text x="-60" y="35" fill="hsl(var(--foreground))" fontSize="12" fontFamily="monospace">110</text>
-          </g>
+        {/* Software & World Side */}
+        <g id="software-world" transform="translate(600, 200)">
+            {/* World Grid */}
+            <g className="world-grid" opacity="0.4" filter="url(#glow)">
+                {/* Latitudes */}
+                <g className="world-grid-lat">
+                    <circle cx="0" cy="0" r="100" fill="none" stroke="hsl(var(--primary))" strokeWidth="0.5"/>
+                    <ellipse cx="0" cy="0" rx="100" ry="30" fill="none" stroke="hsl(var(--primary))" strokeWidth="0.5"/>
+                    <ellipse cx="0" cy="0" rx="100" ry="60" fill="none" stroke="hsl(var(--primary))" strokeWidth="0.5"/>
+                    <ellipse cx="0" cy="0" rx="100" ry="90" fill="none" stroke="hsl(var(--primary))" strokeWidth="0.5"/>
+                </g>
+                {/* Longitudes */}
+                <g className="world-grid-lon">
+                    <ellipse cx="0" cy="0" rx="40" ry="100" fill="none" stroke="hsl(var(--accent))" strokeWidth="0.5" />
+                    <ellipse cx="0" cy="0" rx="40" ry="100" fill="none" stroke="hsl(var(--accent))" strokeWidth="0.5" transform="rotate(60)"/>
+                    <ellipse cx="0" cy="0" rx="40" ry="100" fill="none" stroke="hsl(var(--accent))" strokeWidth="0.5" transform="rotate(120)"/>
+                </g>
+            </g>
+
+            {/* Core AI */}
+            <circle cx="0" cy="0" r="30" fill="url(#coreGrad)" filter="url(#glow)" />
+            <circle className="core-pulse" cx="0" cy="0" r="30" fill="url(#coreGrad)" />
         </g>
       </svg>
     </div>
