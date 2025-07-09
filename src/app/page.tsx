@@ -1,6 +1,4 @@
 import Header from '@/components/header';
-import HeroSection from '@/components/sections/hero';
-import IdeationSection from '@/components/sections/ideation';
 import ProjectsSection from '@/components/sections/projects';
 import SkillsSection from '@/components/sections/skills';
 import ExperienceSection from '@/components/sections/experience';
@@ -15,8 +13,6 @@ export default function Home() {
     <div className="flex flex-col min-h-[100dvh]">
       <Header />
       <main className="flex-1">
-        <HeroSection />
-        <IdeationSection />
         <ProjectsSection />
         <SkillsSection />
         <ExperienceSection />
