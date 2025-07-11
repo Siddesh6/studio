@@ -16,8 +16,8 @@ export default function AboutSection() {
               src={details.avatarUrl || "https://placehold.co/600x600.png"}
               data-ai-hint={details.avatarHint}
               alt={details.name}
-              width={350}
-              height={350}
+              width={300}
+              height={300}
               className="rounded-full object-cover aspect-square shadow-2xl"
               unoptimized={details.avatarUrl?.startsWith('data:image')}
             />
