@@ -291,19 +291,28 @@ function ProjectForm({ item, onSave }: { item: ProjectFormValues | null, onSave:
   const onSubmit = (data: ProjectFormValues) => onSave(data);
   
   return (
-    <DialogContent className="sm:max-w-[600px]"><DialogHeader><DialogTitle>{item ? 'Edit' : 'Add'} Project</DialogTitle></DialogHeader>
-      <Form {...form}><form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-          <FormField control={form.control} name="title" render={({ field }) => <FormItem><FormLabel>Title</FormLabel><FormControl><Input {...field} /></FormControl><FormMessage /></FormItem>} />
-          <FormField control={form.control} name="role" render={({ field }) => <FormItem><FormLabel>Role</FormLabel><FormControl><Input {...field} /></FormControl><FormMessage /></FormItem>} />
-          <FormField control={form.control} name="problem" render={({ field }) => <FormItem><FormLabel>Problem</FormLabel><FormControl><Textarea {...field} /></FormControl><FormMessage /></FormItem>} />
-          <FormField control={form.control} name="technologies" render={({ field }) => <FormItem><FormLabel>Technologies (comma-separated)</FormLabel><FormControl><Input {...field} /></FormControl><FormMessage /></FormItem>} />
-          <FormField control={form.control} name="liveUrl" render={({ field }) => <FormItem><FormLabel>Live URL (Optional)</FormLabel><FormControl><Input {...field} /></FormControl><FormMessage /></FormItem>} />
-          <FormField control={form.control} name="githubUrl" render={({ field }) => <FormItem><FormLabel>GitHub URL (Optional)</FormLabel><FormControl><Input {...field} /></FormControl><FormMessage /></FormItem>} />
-          <FormItem><FormLabel>Image</FormLabel><FormControl><Input type="file" accept="image/*" onChange={(e) => handleImageUpload(e, form.setValue, 'imageUrl')} /></FormControl><FormMessage />
-            {form.watch('imageUrl') && <img src={form.watch('imageUrl')} alt="Preview" className="mt-2 rounded-md max-h-40" />}
-          </FormItem>
-          <DialogFooter><DialogClose asChild><Button type="button" variant="secondary">Cancel</Button></DialogClose><Button type="submit">Save</Button></DialogFooter>
-      </form></Form>
+    <DialogContent className="sm:max-w-[600px] grid-rows-[auto_minmax(0,1fr)_auto] p-0 max-h-[90dvh]">
+      <DialogHeader className="p-6 pb-0"><DialogTitle>{item ? 'Edit' : 'Add'} Project</DialogTitle></DialogHeader>
+      <ScrollArea className="overflow-y-auto">
+        <div className="p-6">
+          <Form {...form}><form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+              <FormField control={form.control} name="title" render={({ field }) => <FormItem><FormLabel>Title</FormLabel><FormControl><Input {...field} /></FormControl><FormMessage /></FormItem>} />
+              <FormField control={form.control} name="role" render={({ field }) => <FormItem><FormLabel>Role</FormLabel><FormControl><Input {...field} /></FormControl><FormMessage /></FormItem>} />
+              <FormField control={form.control} name="problem" render={({ field }) => <FormItem><FormLabel>Problem</FormLabel><FormControl><Textarea {...field} /></FormControl><FormMessage /></FormMessage>} />
+              <FormField control={form.control} name="technologies" render={({ field }) => <FormItem><FormLabel>Technologies (comma-separated)</FormLabel><FormControl><Input {...field} /></FormControl><FormMessage /></FormItem>} />
+              <FormField control={form.control} name="liveUrl" render={({ field }) => <FormItem><FormLabel>Live URL (Optional)</FormLabel><FormControl><Input {...field} /></FormControl><FormMessage /></FormItem>} />
+              <FormField control={form.control} name="githubUrl" render={({ field }) => <FormItem><FormLabel>GitHub URL (Optional)</FormLabel><FormControl><Input {...field} /></FormControl><FormMessage /></FormItem>} />
+              <FormItem><FormLabel>Image</FormLabel><FormControl><Input type="file" accept="image/*" onChange={(e) => handleImageUpload(e, form.setValue, 'imageUrl')} /></FormControl><FormMessage />
+                {form.watch('imageUrl') && <img src={form.watch('imageUrl')} alt="Preview" className="mt-2 rounded-md max-h-40" />}
+              </FormItem>
+              {/* The form is submitted by the button in the footer */}
+          </form></Form>
+        </div>
+      </ScrollArea>
+      <DialogFooter className="p-6 pt-0 border-t">
+          <DialogClose asChild><Button type="button" variant="secondary">Cancel</Button></DialogClose>
+          <Button type="button" onClick={form.handleSubmit(onSubmit)}>Save</Button>
+      </DialogFooter>
     </DialogContent>
   );
 }
@@ -322,15 +331,23 @@ function ExperienceForm({ item, onSave }: { item: ExperienceFormValues | null, o
   const onSubmit = (data: ExperienceFormValues) => onSave(data);
 
   return (
-    <DialogContent className="sm:max-w-[600px]"><DialogHeader><DialogTitle>{item ? 'Edit' : 'Add'} Experience</DialogTitle></DialogHeader>
-      <Form {...form}><form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-        <FormField control={form.control} name="title" render={({ field }) => <FormItem><FormLabel>Title</FormLabel><FormControl><Input {...field} /></FormControl><FormMessage /></FormItem>} />
-        <FormField control={form.control} name="company" render={({ field }) => <FormItem><FormLabel>Company</FormLabel><FormControl><Input {...field} /></FormControl><FormMessage /></FormItem>} />
-        <FormField control={form.control} name="dates" render={({ field }) => <FormItem><FormLabel>Dates</FormLabel><FormControl><Input {...field} /></FormControl><FormMessage /></FormItem>} />
-        <FormField control={form.control} name="responsibilities" render={({ field }) => <FormItem><FormLabel>Responsibilities (one per line)</FormLabel><FormControl><Textarea rows={5} {...field} /></FormControl><FormMessage /></FormItem>} />
-        <FormField control={form.control} name="technologies" render={({ field }) => <FormItem><FormLabel>Technologies (comma-separated)</FormLabel><FormControl><Input {...field} /></FormControl><FormMessage /></FormItem>} />
-        <DialogFooter><DialogClose asChild><Button type="button" variant="secondary">Cancel</Button></DialogClose><Button type="submit">Save</Button></DialogFooter>
-      </form></Form>
+    <DialogContent className="sm:max-w-[600px] grid-rows-[auto_minmax(0,1fr)_auto] p-0 max-h-[90dvh]">
+      <DialogHeader className="p-6 pb-0"><DialogTitle>{item ? 'Edit' : 'Add'} Experience</DialogTitle></DialogHeader>
+      <ScrollArea className="overflow-y-auto">
+        <div className="p-6">
+          <Form {...form}><form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+            <FormField control={form.control} name="title" render={({ field }) => <FormItem><FormLabel>Title</FormLabel><FormControl><Input {...field} /></FormControl><FormMessage /></FormItem>} />
+            <FormField control={form.control} name="company" render={({ field }) => <FormItem><FormLabel>Company</FormLabel><FormControl><Input {...field} /></FormControl><FormMessage /></FormItem>} />
+            <FormField control={form.control} name="dates" render={({ field }) => <FormItem><FormLabel>Dates</FormLabel><FormControl><Input {...field} /></FormControl><FormMessage /></FormItem>} />
+            <FormField control={form.control} name="responsibilities" render={({ field }) => <FormItem><FormLabel>Responsibilities (one per line)</FormLabel><FormControl><Textarea rows={5} {...field} /></FormControl><FormMessage /></FormItem>} />
+            <FormField control={form.control} name="technologies" render={({ field }) => <FormItem><FormLabel>Technologies (comma-separated)</FormLabel><FormControl><Input {...field} /></FormControl><FormMessage /></FormItem>} />
+          </form></Form>
+        </div>
+      </ScrollArea>
+      <DialogFooter className="p-6 pt-0 border-t">
+        <DialogClose asChild><Button type="button" variant="secondary">Cancel</Button></DialogClose>
+        <Button type="button" onClick={form.handleSubmit(onSubmit)}>Save</Button>
+      </DialogFooter>
     </DialogContent>
   );
 }
@@ -348,14 +365,22 @@ function EducationForm({ item, onSave }: { item: EducationFormValues | null, onS
   const onSubmit = (data: EducationFormValues) => onSave(data);
 
   return (
-    <DialogContent className="sm:max-w-[600px]"><DialogHeader><DialogTitle>{item ? 'Edit' : 'Add'} Education</DialogTitle></DialogHeader>
-      <Form {...form}><form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-        <FormField control={form.control} name="title" render={({ field }) => <FormItem><FormLabel>Degree / Title</FormLabel><FormControl><Input {...field} /></FormControl><FormMessage /></FormItem>} />
-        <FormField control={form.control} name="institution" render={({ field }) => <FormItem><FormLabel>Institution</FormLabel><FormControl><Input {...field} /></FormControl><FormMessage /></FormItem>} />
-        <FormField control={form.control} name="graduationDate" render={({ field }) => <FormItem><FormLabel>Graduation Date</FormLabel><FormControl><Input {...field} /></FormControl><FormMessage /></FormItem>} />
-        <FormField control={form.control} name="honors" render={({ field }) => <FormItem><FormLabel>Honors (Optional)</FormLabel><FormControl><Input {...field} /></FormControl><FormMessage /></FormItem>} />
-        <DialogFooter><DialogClose asChild><Button type="button" variant="secondary">Cancel</Button></DialogClose><Button type="submit">Save</Button></DialogFooter>
-      </form></Form>
+    <DialogContent className="sm:max-w-[600px] grid-rows-[auto_minmax(0,1fr)_auto] p-0 max-h-[90dvh]">
+      <DialogHeader className="p-6 pb-0"><DialogTitle>{item ? 'Edit' : 'Add'} Education</DialogTitle></DialogHeader>
+      <ScrollArea className="overflow-y-auto">
+        <div className="p-6">
+          <Form {...form}><form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+            <FormField control={form.control} name="title" render={({ field }) => <FormItem><FormLabel>Degree / Title</FormLabel><FormControl><Input {...field} /></FormControl><FormMessage /></FormItem>} />
+            <FormField control={form.control} name="institution" render={({ field }) => <FormItem><FormLabel>Institution</FormLabel><FormControl><Input {...field} /></FormControl><FormMessage /></FormItem>} />
+            <FormField control={form.control} name="graduationDate" render={({ field }) => <FormItem><FormLabel>Graduation Date</FormLabel><FormControl><Input {...field} /></FormControl><FormMessage /></FormItem>} />
+            <FormField control={form.control} name="honors" render={({ field }) => <FormItem><FormLabel>Honors (Optional)</FormLabel><FormControl><Input {...field} /></FormControl><FormMessage /></FormItem>} />
+          </form></Form>
+        </div>
+      </ScrollArea>
+      <DialogFooter className="p-6 pt-0 border-t">
+        <DialogClose asChild><Button type="button" variant="secondary">Cancel</Button></DialogClose>
+        <Button type="button" onClick={form.handleSubmit(onSubmit)}>Save</Button>
+      </DialogFooter>
     </DialogContent>
   );
 }
@@ -373,14 +398,22 @@ function InvolvementForm({ item, onSave }: { item: InvolvementFormValues | null,
   const onSubmit = (data: InvolvementFormValues) => onSave(data);
 
   return (
-    <DialogContent className="sm:max-w-[600px]"><DialogHeader><DialogTitle>{item ? 'Edit' : 'Add'} Involvement</DialogTitle></DialogHeader>
-      <Form {...form}><form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-        <FormField control={form.control} name="title" render={({ field }) => <FormItem><FormLabel>Organization / Club</FormLabel><FormControl><Input {...field} /></FormControl><FormMessage /></FormItem>} />
-        <FormField control={form.control} name="role" render={({ field }) => <FormItem><FormLabel>Role / Position</FormLabel><FormControl><Input {...field} /></FormControl><FormMessage /></FormItem>} />
-        <FormField control={form.control} name="dates" render={({ field }) => <FormItem><FormLabel>Dates</FormLabel><FormControl><Input {...field} /></FormControl><FormMessage /></FormItem>} />
-        <FormField control={form.control} name="description" render={({ field }) => <FormItem><FormLabel>Description</FormLabel><FormControl><Textarea {...field} /></FormControl><FormMessage /></FormItem>} />
-        <DialogFooter><DialogClose asChild><Button type="button" variant="secondary">Cancel</Button></DialogClose><Button type="submit">Save</Button></DialogFooter>
-      </form></Form>
+    <DialogContent className="sm:max-w-[600px] grid-rows-[auto_minmax(0,1fr)_auto] p-0 max-h-[90dvh]">
+      <DialogHeader className="p-6 pb-0"><DialogTitle>{item ? 'Edit' : 'Add'} Involvement</DialogTitle></DialogHeader>
+      <ScrollArea className="overflow-y-auto">
+        <div className="p-6">
+          <Form {...form}><form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+            <FormField control={form.control} name="title" render={({ field }) => <FormItem><FormLabel>Organization / Club</FormLabel><FormControl><Input {...field} /></FormControl><FormMessage /></FormItem>} />
+            <FormField control={form.control} name="role" render={({ field }) => <FormItem><FormLabel>Role / Position</FormLabel><FormControl><Input {...field} /></FormControl><FormMessage /></FormItem>} />
+            <FormField control={form.control} name="dates" render={({ field }) => <FormItem><FormLabel>Dates</FormLabel><FormControl><Input {...field} /></FormControl><FormMessage /></FormItem>} />
+            <FormField control={form.control} name="description" render={({ field }) => <FormItem><FormLabel>Description</FormLabel><FormControl><Textarea {...field} /></FormControl><FormMessage /></FormItem>} />
+          </form></Form>
+        </div>
+      </ScrollArea>
+      <DialogFooter className="p-6 pt-0 border-t">
+        <DialogClose asChild><Button type="button" variant="secondary">Cancel</Button></DialogClose>
+        <Button type="button" onClick={form.handleSubmit(onSubmit)}>Save</Button>
+      </DialogFooter>
     </DialogContent>
   );
 }
@@ -398,15 +431,23 @@ function GalleryForm({ item, onSave }: { item: GalleryFormValues | null, onSave:
   const onSubmit = (data: GalleryFormValues) => onSave(data);
 
   return (
-    <DialogContent className="sm:max-w-[600px]"><DialogHeader><DialogTitle>{item ? 'Edit' : 'Add'} Gallery Item</DialogTitle></DialogHeader>
-      <Form {...form}><form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-        <FormField control={form.control} name="title" render={({ field }) => <FormItem><FormLabel>Title</FormLabel><FormControl><Input {...field} /></FormControl><FormMessage /></FormItem>} />
-        <FormField control={form.control} name="description" render={({ field }) => <FormItem><FormLabel>Description</FormLabel><FormControl><Textarea {...field} /></FormControl><FormMessage /></FormItem>} />
-        <FormItem><FormLabel>Image</FormLabel><FormControl><Input type="file" accept="image/*" onChange={(e) => handleImageUpload(e, form.setValue, 'imageUrl')} /></FormControl><FormMessage />
-            {form.watch('imageUrl') && <img src={form.watch('imageUrl')} alt="Preview" className="mt-2 rounded-md max-h-40" />}
-        </FormItem>
-        <DialogFooter><DialogClose asChild><Button type="button" variant="secondary">Cancel</Button></DialogClose><Button type="submit">Save</Button></DialogFooter>
-      </form></Form>
+    <DialogContent className="sm:max-w-[600px] grid-rows-[auto_minmax(0,1fr)_auto] p-0 max-h-[90dvh]">
+      <DialogHeader className="p-6 pb-0"><DialogTitle>{item ? 'Edit' : 'Add'} Gallery Item</DialogTitle></DialogHeader>
+      <ScrollArea className="overflow-y-auto">
+        <div className="p-6">
+          <Form {...form}><form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+            <FormField control={form.control} name="title" render={({ field }) => <FormItem><FormLabel>Title</FormLabel><FormControl><Input {...field} /></FormControl><FormMessage /></FormItem>} />
+            <FormField control={form.control} name="description" render={({ field }) => <FormItem><FormLabel>Description</FormLabel><FormControl><Textarea {...field} /></FormControl><FormMessage /></FormItem>} />
+            <FormItem><FormLabel>Image</FormLabel><FormControl><Input type="file" accept="image/*" onChange={(e) => handleImageUpload(e, form.setValue, 'imageUrl')} /></FormControl><FormMessage />
+                {form.watch('imageUrl') && <img src={form.watch('imageUrl')} alt="Preview" className="mt-2 rounded-md max-h-40" />}
+            </FormItem>
+          </form></Form>
+        </div>
+      </ScrollArea>
+      <DialogFooter className="p-6 pt-0 border-t">
+        <DialogClose asChild><Button type="button" variant="secondary">Cancel</Button></DialogClose>
+        <Button type="button" onClick={form.handleSubmit(onSubmit)}>Save</Button>
+      </DialogFooter>
     </DialogContent>
   );
 }
@@ -424,18 +465,26 @@ function PublicationForm({ item, onSave }: { item: PublicationFormValues | null,
   const onSubmit = (data: PublicationFormValues) => onSave(data);
 
   return (
-    <DialogContent className="sm:max-w-[600px]"><DialogHeader><DialogTitle>{item ? 'Edit' : 'Add'} Publication</DialogTitle></DialogHeader>
-      <Form {...form}><form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-        <FormField control={form.control} name="title" render={({ field }) => <FormItem><FormLabel>Title</FormLabel><FormControl><Input {...field} /></FormControl><FormMessage /></FormItem>} />
-        <FormField control={form.control} name="journal" render={({ field }) => <FormItem><FormLabel>Journal</FormLabel><FormControl><Input {...field} /></FormControl><FormMessage /></FormItem>} />
-        <FormField control={form.control} name="date" render={({ field }) => <FormItem><FormLabel>Date</FormLabel><FormControl><Input {...field} /></FormControl><FormMessage /></FormItem>} />
-        <FormField control={form.control} name="summary" render={({ field }) => <FormItem><FormLabel>Summary</FormLabel><FormControl><Textarea {...field} /></FormControl><FormMessage /></FormItem>} />
-        <FormField control={form.control} name="url" render={({ field }) => <FormItem><FormLabel>URL</FormLabel><FormControl><Input {...field} /></FormControl><FormMessage /></FormItem>} />
-        <FormItem><FormLabel>Image</FormLabel><FormControl><Input type="file" accept="image/*" onChange={(e) => handleImageUpload(e, form.setValue, 'imageUrl')} /></FormControl><FormMessage />
-            {form.watch('imageUrl') && <img src={form.watch('imageUrl')} alt="Preview" className="mt-2 rounded-md max-h-40" />}
-        </FormItem>
-        <DialogFooter><DialogClose asChild><Button type="button" variant="secondary">Cancel</Button></DialogClose><Button type="submit">Save</Button></DialogFooter>
-      </form></Form>
+     <DialogContent className="sm:max-w-[600px] grid-rows-[auto_minmax(0,1fr)_auto] p-0 max-h-[90dvh]">
+      <DialogHeader className="p-6 pb-0"><DialogTitle>{item ? 'Edit' : 'Add'} Publication</DialogTitle></DialogHeader>
+      <ScrollArea className="overflow-y-auto">
+        <div className="p-6">
+          <Form {...form}><form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+            <FormField control={form.control} name="title" render={({ field }) => <FormItem><FormLabel>Title</FormLabel><FormControl><Input {...field} /></FormControl><FormMessage /></FormMessage>} />
+            <FormField control={form.control} name="journal" render={({ field }) => <FormItem><FormLabel>Journal</FormLabel><FormControl><Input {...field} /></FormControl><FormMessage /></FormItem>} />
+            <FormField control={form.control} name="date" render={({ field }) => <FormItem><FormLabel>Date</FormLabel><FormControl><Input {...field} /></FormControl><FormMessage /></FormItem>} />
+            <FormField control={form.control} name="summary" render={({ field }) => <FormItem><FormLabel>Summary</FormLabel><FormControl><Textarea {...field} /></FormControl><FormMessage /></FormItem>} />
+            <FormField control={form.control} name="url" render={({ field }) => <FormItem><FormLabel>URL</FormLabel><FormControl><Input {...field} /></FormControl><FormMessage /></FormMessage>} />
+            <FormItem><FormLabel>Image</FormLabel><FormControl><Input type="file" accept="image/*" onChange={(e) => handleImageUpload(e, form.setValue, 'imageUrl')} /></FormControl><FormMessage />
+                {form.watch('imageUrl') && <img src={form.watch('imageUrl')} alt="Preview" className="mt-2 rounded-md max-h-40" />}
+            </FormItem>
+          </form></Form>
+        </div>
+      </ScrollArea>
+      <DialogFooter className="p-6 pt-0 border-t">
+        <DialogClose asChild><Button type="button" variant="secondary">Cancel</Button></DialogClose>
+        <Button type="button" onClick={form.handleSubmit(onSubmit)}>Save</Button>
+      </DialogFooter>
     </DialogContent>
   );
 }
