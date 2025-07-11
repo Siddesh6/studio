@@ -68,10 +68,7 @@ export default function Header() {
       </div>
       <div className="ml-auto flex items-center gap-4">
         <ThemeToggle />
-        <Link href="/admin" prefetch={false}>
-          <Settings className="h-5 w-5 text-muted-foreground transition-colors hover:text-primary" />
-          <span className="sr-only">Edit Details</span>
-        </Link>
+        
       </div>
     </header>
   );
