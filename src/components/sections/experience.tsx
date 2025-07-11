@@ -1,3 +1,4 @@
+
 'use client';
 
 import { usePersonalData } from "@/context/PersonalDataContext";
@@ -20,33 +21,35 @@ export default function ExperienceSection() {
             </p>
           </div>
         </div>
-        <div className="relative">
-          <div className="absolute left-1/2 -translate-x-1/2 h-full w-0.5 bg-border" aria-hidden="true" />
+        <div className="relative md:pl-8">
+          <div className="absolute left-4 md:left-1/2 w-0.5 h-full bg-border -translate-x-1/2" aria-hidden="true" />
           <div className="space-y-8">
             {experienceData.map((exp, index) => (
-              <div key={exp.id} className="flex items-center w-full">
-                <div className={`w-1/2 ${index % 2 === 0 ? 'pr-8 text-right' : 'pl-8 text-left'}`}>
-                  <Card className={`text-left shadow-md transition-shadow hover:shadow-lg ${index % 2 === 0 ? '' : 'lg:translate-x-[calc(100%_+_4rem)]'} ${index % 2 !== 0 ? '' : 'lg:-translate-x-[calc(0%_-_0rem)]'}`}>
-                    <CardHeader>
-                      <CardTitle className="font-headline text-xl">{exp.title}</CardTitle>
-                      <CardDescription>{exp.company} &bull; {exp.dates}</CardDescription>
-                    </CardHeader>
-                    <CardContent>
-                      <ul className="space-y-2 list-disc pl-5 text-sm text-muted-foreground">
-                        {exp.responsibilities.map((resp, i) => (
-                          <li key={i}>{resp}</li>
-                        ))}
-                      </ul>
-                      <div className="mt-4 flex flex-wrap gap-2">
-                        {exp.technologies.map((tech) => (
-                          <Badge key={tech} variant="secondary">{tech}</Badge>
-                        ))}
-                      </div>
-                    </CardContent>
-                  </Card>
-                </div>
-                <div className="absolute left-1/2 -translate-x-1/2 bg-background p-1 rounded-full border">
+              <div key={exp.id} className="relative flex items-start">
+                 <div className="absolute left-4 -translate-x-1/2 bg-background p-1 rounded-full border">
                   <Briefcase className="h-6 w-6 text-primary" />
+                </div>
+                <div className="pl-12 md:pl-0 md:w-1/2 md:flex md:justify-start">
+                   <div className={`w-full ${index % 2 === 0 ? 'md:pr-8 md:text-left' : 'md:pl-8 md:text-left'}`}>
+                    <Card className={`text-left shadow-md transition-shadow hover:shadow-lg w-full ${index % 2 !== 0 ? 'md:translate-x-[calc(100%_+_4rem)]' : ''}`}>
+                      <CardHeader>
+                        <CardTitle className="font-headline text-xl">{exp.title}</CardTitle>
+                        <CardDescription>{exp.company} &bull; {exp.dates}</CardDescription>
+                      </CardHeader>
+                      <CardContent>
+                        <ul className="space-y-2 list-disc pl-5 text-sm text-muted-foreground">
+                          {exp.responsibilities.map((resp, i) => (
+                            <li key={i}>{resp}</li>
+                          ))}
+                        </ul>
+                        <div className="mt-4 flex flex-wrap gap-2">
+                          {exp.technologies.map((tech) => (
+                            <Badge key={tech} variant="secondary">{tech}</Badge>
+                          ))}
+                        </div>
+                      </CardContent>
+                    </Card>
+                  </div>
                 </div>
               </div>
             ))}

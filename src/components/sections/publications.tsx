@@ -1,3 +1,4 @@
+
 'use client';
 
 import { usePersonalData } from "@/context/PersonalDataContext";
@@ -25,7 +26,7 @@ export default function PublicationsSection() {
         <div className="mx-auto grid max-w-5xl gap-8">
           {publicationsData.map((pub) => (
             <Card key={pub.id} className="shadow-md flex flex-col md:flex-row overflow-hidden transition-all duration-300 hover:shadow-xl hover:-translate-y-1">
-              <div className="md:w-1/3 relative">
+              <div className="md:w-1/3 relative aspect-[3/2] md:aspect-auto">
                  <Image
                     src={pub.imageUrl}
                     alt={pub.title}

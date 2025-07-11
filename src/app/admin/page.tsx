@@ -1,4 +1,5 @@
 
+
 'use client';
 
 import { useForm, useFieldArray } from 'react-hook-form';
@@ -19,6 +20,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger, DialogFooter, DialogClose } from "@/components/ui/dialog";
 import { socialIconMap } from '@/lib/data';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area';
 
 // Schemas for validation
 const socialSchema = z.object({
@@ -168,8 +170,8 @@ function CrudManager<T extends { id: string, title: string }>({
       <div className="space-y-4">
         {items.map(item => (
           <div key={item.id} className="flex items-center justify-between p-3 border rounded-lg">
-            <span className="font-medium">{item.title}</span>
-            <div className="space-x-2">
+            <span className="font-medium text-sm md:text-base break-all">{item.title}</span>
+            <div className="space-x-2 flex-shrink-0 ml-2">
               <Button variant="outline" size="sm" onClick={() => handleEdit(item)}>Edit</Button>
               <Button variant="destructive" size="sm" onClick={() => handleDelete(item.id)}>Delete</Button>
             </div>
@@ -236,7 +238,7 @@ function PersonalDetailsForm() {
                     <Label className="text-lg font-semibold">Social Links</Label>
                     <div className="space-y-4 mt-2">
                         {fields.map((field, index) => (
-                            <div key={field.id} className="flex items-end gap-2 p-3 border rounded-lg">
+                            <div key={field.id} className="flex flex-col md:flex-row items-stretch md:items-end gap-2 p-3 border rounded-lg">
                                 <FormField control={form.control} name={`socials.${index}.name`} render={({ field }) => (
                                     <FormItem className="flex-1"><FormLabel>Platform</FormLabel>
                                     <Select onValueChange={field.onChange} defaultValue={field.value}>
@@ -247,7 +249,7 @@ function PersonalDetailsForm() {
                                     </FormItem>
                                 )} />
                                 <FormField control={form.control} name={`socials.${index}.url`} render={({ field }) => (<FormItem className="flex-1"><FormLabel>URL</FormLabel><FormControl><Input {...field} /></FormControl><FormMessage /></FormItem>)} />
-                                <Button type="button" variant="destructive" size="icon" onClick={() => remove(index)}><Trash2 className="h-4 w-4" /></Button>
+                                <Button type="button" variant="destructive" size="icon" onClick={() => remove(index)} className="flex-shrink-0"><Trash2 className="h-4 w-4" /></Button>
                             </div>
                         ))}
                          <Button type="button" variant="outline" size="sm" onClick={() => append({ id: crypto.randomUUID(), name: 'GitHub', url: '' })}>
@@ -616,16 +618,19 @@ export default function AdminPage() {
                 <Button variant="outline" onClick={handleLogout}>Logout</Button>
             </div>
             <Tabs defaultValue="personal" className="w-full">
-                <TabsList className="grid w-full grid-cols-2 md:grid-cols-4 lg:grid-cols-8">
-                    <TabsTrigger value="personal">Personal</TabsTrigger>
-                    <TabsTrigger value="projects">Projects</TabsTrigger>
-                    <TabsTrigger value="skills">Skills</TabsTrigger>
-                    <TabsTrigger value="experience">Experience</TabsTrigger>
-                    <TabsTrigger value="education">Education</TabsTrigger>
-                    <TabsTrigger value="involvement">Involvement</TabsTrigger>
-                    <TabsTrigger value="gallery">Gallery</TabsTrigger>
-                    <TabsTrigger value="publications">Publications</TabsTrigger>
-                </TabsList>
+                <ScrollArea className="w-full pb-4">
+                  <TabsList className="grid w-max grid-flow-col gap-4">
+                      <TabsTrigger value="personal">Personal</TabsTrigger>
+                      <TabsTrigger value="projects">Projects</TabsTrigger>
+                      <TabsTrigger value="skills">Skills</TabsTrigger>
+                      <TabsTrigger value="experience">Experience</TabsTrigger>
+                      <TabsTrigger value="education">Education</TabsTrigger>
+                      <TabsTrigger value="involvement">Involvement</TabsTrigger>
+                      <TabsTrigger value="gallery">Gallery</TabsTrigger>
+                      <TabsTrigger value="publications">Publications</TabsTrigger>
+                  </TabsList>
+                  <ScrollBar orientation="horizontal" />
+                </ScrollArea>
 
                 <TabsContent value="personal"><Card><CardHeader><CardTitle>Personal Details</CardTitle><CardDescription>Update your personal and contact information.</CardDescription></CardHeader><CardContent><PersonalDetailsForm /></CardContent></Card></TabsContent>
                 
