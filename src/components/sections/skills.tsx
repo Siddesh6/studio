@@ -14,7 +14,7 @@ export default function SkillsSection() {
       <div className="container px-4 md:px-6">
         <div className="flex flex-col items-center justify-center space-y-4 text-center mb-12">
           <div className="space-y-2">
-            <h2 className="text-3xl font-bold font-headline tracking-tighter sm:text-5xl">My Skills</h2>
+            <h2 className="text-3xl font-bold font-headline tracking-tighter sm:text-5xl">Skills</h2>
             <p className="max-w-[900px] text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
               A collection of technologies I'm proficient with and the soft skills I bring to every project.
             </p>
