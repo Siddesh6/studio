@@ -240,12 +240,10 @@ function PersonalDetailsForm() {
                         {fields.map((field, index) => (
                             <div key={field.id} className="flex flex-col md:flex-row items-stretch md:items-end gap-2 p-3 border rounded-lg">
                                 <FormField control={form.control} name={`socials.${index}.name`} render={({ field }) => (
-                                    <FormItem className="flex-1"><FormLabel>Platform</FormLabel>
-                                    <Select onValueChange={field.onChange} defaultValue={field.value}>
-                                        <FormControl><SelectTrigger><SelectValue /></SelectTrigger></FormControl>
-                                        <SelectContent>{Object.keys(socialIconMap).map(name => <SelectItem key={name} value={name}>{name}</SelectItem>)}</SelectContent>
-                                    </Select>
-                                    <FormMessage />
+                                    <FormItem className="flex-1">
+                                        <FormLabel>Platform</FormLabel>
+                                        <FormControl><Input {...field} placeholder="e.g. GitHub" /></FormControl>
+                                        <FormMessage />
                                     </FormItem>
                                 )} />
                                 <FormField control={form.control} name={`socials.${index}.url`} render={({ field }) => (<FormItem className="flex-1"><FormLabel>URL</FormLabel><FormControl><Input {...field} /></FormControl><FormMessage /></FormItem>)} />

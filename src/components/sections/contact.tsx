@@ -3,6 +3,8 @@
 import Link from "next/link";
 import { usePersonalData } from "@/context/PersonalDataContext";
 import { Button } from "@/components/ui/button";
+import { socialIconMap } from "@/lib/data";
+import { Link2 } from "lucide-react";
 
 export default function ContactSection() {
   const { personalData } = usePersonalData();
@@ -22,18 +24,21 @@ export default function ContactSection() {
               </a>
             </Button>
             <div className="flex items-center gap-4">
-              {personalData.details.socials.map((social) => (
-                <Link
-                  key={social.name}
-                  href={social.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label={social.name}
-                  className="text-muted-foreground hover:text-primary transition-colors"
-                >
-                  <social.icon className="h-8 w-8" />
-                </Link>
-              ))}
+              {personalData.details.socials.map((social) => {
+                const Icon = socialIconMap[social.name] || Link2;
+                return (
+                  <Link
+                    key={social.name}
+                    href={social.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={social.name}
+                    className="text-muted-foreground hover:text-primary transition-colors"
+                  >
+                    <Icon className="h-8 w-8" />
+                  </Link>
+                )
+              })}
             </div>
           </div>
         </div>
